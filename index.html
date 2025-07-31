@@ -2,35 +2,31 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>Logoo - أنشئ شعارك</title>
-  <link rel="stylesheet" href="style.css">
+  <title>شعار ثلاثي الأبعاد</title>
+  <style>
+    body {
+      text-align: center;
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+    #logoCanvas {
+      border: 2px solid #444;
+      margin-top: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>✨ Logoo</h1>
-
-    <input type="text" id="nameInput" placeholder="اكتب الاسم هنا" />
-
-    <label>اختر نوع الخط:</label>
-    <select id="fontSelect">
-      <option value="Tahoma">Tahoma</option>
-      <option value="Arial">Arial</option>
-      <option value="Verdana">Verdana</option>
-      <option value="Courier New">Courier New</option>
-      <option value="Georgia">Georgia</option>
-      <option value="Impact">Impact</option>
-    </select>
-
-    <br><br>
-    <label>اختر لون الخلفية:</label>
-    <input type="color" id="bgColorPicker" value="#3498db" />
-
-    <br><br>
-    <button onclick="generateLogo()">أنشئ الشعار</button>
-    <button onclick="downloadLogo()">📥 حمّل الشعار</button>
-
-    <canvas id="logoCanvas" width="500" height="250"></canvas>
-  </div>
+  <h2>صمم شعارك بنفسك</h2>
+  <input type="text" id="nameInput" placeholder="ادخل اسم الشعار" />
+  <select id="fontSelect">
+    <option value="Arial">Arial</option>
+    <option value="Cairo">Cairo</option>
+    <option value="Tahoma">Tahoma</option>
+  </select>
+  <input type="color" id="bgColorPicker" value="#1e1e1e" />
+  <button onclick="generateLogo()">إنشاء الشعار</button>
+  <canvas id="logoCanvas" width="400" height="200"></canvas>
 
   <script src="script.js"></script>
 </body>
