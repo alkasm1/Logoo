@@ -1,35 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar">
 <head>
-  <title>Logoo - حول اسمك إلى شعار</title>
-  <style>
-    body { font-family: Arial; text-align: center; padding: 40px; background: #f9f9f9; }
-    #logoCanvas { border: 1px solid #ccc; margin-top: 20px; }
-  </style>
+  <meta charset="UTF-8">
+  <title>Logoo - أنشئ شعارك</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>✨ Logoo ✨</h1>
-  <p>أدخل اسمك لتحصل على شعار فريد</p>
-  <input type="text" id="nameInput" placeholder="اكتب الاسم هنا" />
-  <button onclick="generateLogo()">أنشئ شعار</button>
-  <canvas id="logoCanvas" width="400" height="200"></canvas>
+  <div class="container">
+    <h1>✨ Logoo</h1>
 
-  <script>
-    function generateLogo() {
-      const name = document.getElementById("nameInput").value;
-      const canvas = document.getElementById("logoCanvas");
-      const ctx = canvas.getContext("2d");
+    <input type="text" id="nameInput" placeholder="اكتب الاسم هنا" />
 
-      // خلفية الشعار
-      ctx.fillStyle = "#"+Math.floor(Math.random()*16777215).toString(16);
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    <label>اختر نوع الخط:</label>
+    <select id="fontSelect">
+      <option value="Tahoma">Tahoma</option>
+      <option value="Arial">Arial</option>
+      <option value="Verdana">Verdana</option>
+      <option value="Courier New">Courier New</option>
+      <option value="Georgia">Georgia</option>
+      <option value="Impact">Impact</option>
+    </select>
 
-      // نص الشعار
-      ctx.font = "40px Verdana";
-      ctx.fillStyle = "#fff";
-      ctx.textAlign = "center";
-      ctx.fillText(name.toUpperCase(), canvas.width / 2, canvas.height / 2);
-    }
-  </script>
+    <br><br>
+    <label>اختر لون الخلفية:</label>
+    <input type="color" id="bgColorPicker" value="#3498db" />
+
+    <br><br>
+    <button onclick="generateLogo()">أنشئ الشعار</button>
+    <button onclick="downloadLogo()">📥 حمّل الشعار</button>
+
+    <canvas id="logoCanvas" width="500" height="250"></canvas>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
