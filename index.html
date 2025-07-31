@@ -2,31 +2,57 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>شعار ثلاثي الأبعاد</title>
+  <title>مشروع Logoo - صمم شعارك</title>
   <style>
     body {
+      background-color: #1c1c1c;
+      font-family: 'Cairo', sans-serif;
+      color: #fff;
       text-align: center;
-      background-color: #f0f0f0;
-      font-family: Arial, sans-serif;
+      padding: 20px;
     }
+
     #logoCanvas {
-      border: 2px solid #444;
+      border: 2px solid #333;
       margin-top: 20px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    input, select, button {
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+    }
+
+    button {
+      background-color: #444;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #666;
     }
   </style>
 </head>
 <body>
-  <h2>صمم شعارك بنفسك</h2>
-  <input type="text" id="nameInput" placeholder="ادخل اسم الشعار" />
+  <h1>Logoo - توليد شعار احترافي</h1>
+  <input type="text" id="nameInput" placeholder="أدخل اسم الشعار" />
   <select id="fontSelect">
-    <option value="Arial">Arial</option>
     <option value="Cairo">Cairo</option>
-    <option value="Tahoma">Tahoma</option>
+    <option value="Arial">Arial</option>
+    <option value="Montserrat">Montserrat</option>
   </select>
   <input type="color" id="bgColorPicker" value="#1e1e1e" />
-  <button onclick="generateLogo()">إنشاء الشعار</button>
-  <canvas id="logoCanvas" width="400" height="200"></canvas>
+  <button onclick="generate3DLogo({
+    name: document.getElementById('nameInput').value,
+    font: document.getElementById('fontSelect').value,
+    bgColor: document.getElementById('bgColorPicker').value,
+    canvasId: 'logoCanvas'
+  })">أنشئ الشعار</button>
+  <canvas id="logoCanvas" width="420" height="200"></canvas>
 
   <script src="script.js"></script>
 </body>
