@@ -1,58 +1,62 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Logoo - توليد شعار ثلاثي الأبعاد</title>
-
-  <!-- خط مزخرف -->
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8">
+  <title>Logoo - تصميم شعار احترافي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo&family=Pacifico&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: #f0f0f0;
       font-family: 'Cairo', sans-serif;
+      background: #f8f8f8;
       text-align: center;
-      padding: 50px 20px;
+      padding: 30px;
       margin: 0;
     }
 
     .container {
       background: #fff;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-      max-width: 700px;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+      max-width: 800px;
       margin: auto;
     }
 
     h1 {
-      font-size: 28px;
       margin-bottom: 20px;
-      color: #222;
     }
 
-    input[type="text"], select, input[type="color"] {
-      padding: 12px 16px;
-      font-size: 16px;
-      margin: 10px;
-      width: 90%;
-      max-width: 300px;
+    .control-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .control {
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
+      width: 160px;
+    }
+
+    .control input, .control select {
+      padding: 6px 8px;
+      font-size: 14px;
       border-radius: 6px;
       border: 1px solid #ccc;
-      box-sizing: border-box;
     }
 
     button {
-      padding: 12px 20px;
+      padding: 12px 24px;
       font-size: 16px;
-      background-color: #222;
+      margin: 10px 5px;
+      background: #222;
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      margin-top: 15px;
-      transition: 0.3s ease;
     }
 
     button:hover {
@@ -60,16 +64,14 @@
     }
 
     canvas {
-      margin-top: 30px;
-      border: 1px solid #ccc;
+      border: 1px solid #aaa;
+      margin-top: 20px;
       max-width: 100%;
-      height: auto;
     }
 
     footer {
       margin-top: 30px;
-      font-size: 14px;
-      color: #555;
+      font-size: 13px;
     }
 
     footer a {
@@ -77,38 +79,71 @@
       text-decoration: none;
       font-weight: bold;
     }
-
-    footer a:hover {
-      color: #222;
-    }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h1>إنشاء شعار ثلاثي الأبعاد - Logoo</h1>
+    <h1>✨ صمّم شعارك الاحترافي</h1>
 
-    <input type="text" id="nameInput" placeholder="ادخل اسم الشعار" />
-    <br />
+    <div class="control-group">
+      <div class="control">
+        <label>نص الشعار</label>
+        <input type="text" id="nameInput" value="Logoo" />
+      </div>
 
-    <select id="fontSelect">
-      <option value="Cairo">Cairo</option>
-      <option value="Arial">Arial</option>
-      <option value="Montserrat">Montserrat</option>
-      <option value="Pacifico">Pacifico</option>
-    </select>
+      <div class="control">
+        <label>الخط</label>
+        <select id="fontSelect">
+          <option value="Cairo">Cairo</option>
+          <option value="Arial">Arial</option>
+          <option value="Montserrat">Montserrat</option>
+          <option value="Pacifico">Pacifico</option>
+        </select>
+      </div>
 
-    <select id="styleSelect">
-      <option value="3d">ثلاثي الأبعاد</option>
-      <option value="geometric">هندسي</option>
-      <option value="artistic">زخرفي / حر</option>
-    </select>
+      <div class="control">
+        <label>حجم الخط</label>
+        <input type="range" id="fontSize" min="20" max="100" value="54" />
+      </div>
 
-    <br />
-    <input type="color" id="bgColorPicker" value="#1e1e1e" />
+      <div class="control">
+        <label>سماكة الخط الخارجي</label>
+        <input type="range" id="strokeWidth" min="0" max="10" value="2" />
+      </div>
 
-    <br />
-    <button onclick="generateLogo()">🔄 أنشئ الشعار</button>
+      <div class="control">
+        <label>لون النص</label>
+        <input type="color" id="textColor" value="#ffffff" />
+      </div>
+
+      <div class="control">
+        <label>لون الخلفية</label>
+        <input type="color" id="bgColor" value="#1e1e1e" />
+      </div>
+
+      <div class="control">
+        <label>لون الظل</label>
+        <input type="color" id="shadowColor" value="#000000" />
+      </div>
+
+      <div class="control">
+        <label>عمق الظل (3D)</label>
+        <input type="range" id="shadowDepth" min="0" max="15" value="6" />
+      </div>
+
+      <div class="control">
+        <label>إزاحة الظل X</label>
+        <input type="number" id="shadowX" value="3" />
+      </div>
+
+      <div class="control">
+        <label>إزاحة الظل Y</label>
+        <input type="number" id="shadowY" value="3" />
+      </div>
+    </div>
+
+    <button onclick="generateLogo()">🔄 توليد الشعار</button>
     <button onclick="downloadLogo()">⬇️ تحميل الشعار</button>
 
     <canvas id="logoCanvas" width="600" height="250"></canvas>
@@ -120,66 +155,60 @@
 
   <script>
     function generateLogo() {
-      const name = document.getElementById("nameInput").value || "LOGOO";
-      const font = document.getElementById("fontSelect").value;
-      const style = document.getElementById("styleSelect").value;
-      const bgColor = document.getElementById("bgColorPicker").value;
-
       const canvas = document.getElementById("logoCanvas");
       const ctx = canvas.getContext("2d");
 
+      // البيانات من الإدخالات
+      const name = document.getElementById("nameInput").value || "LOGOO";
+      const font = document.getElementById("fontSelect").value;
+      const fontSize = parseInt(document.getElementById("fontSize").value);
+      const strokeWidth = parseInt(document.getElementById("strokeWidth").value);
+      const textColor = document.getElementById("textColor").value;
+      const bgColor = document.getElementById("bgColor").value;
+      const shadowColor = document.getElementById("shadowColor").value;
+      const shadowDepth = parseInt(document.getElementById("shadowDepth").value);
+      const shadowX = parseInt(document.getElementById("shadowX").value);
+      const shadowY = parseInt(document.getElementById("shadowY").value);
+
+      // إعداد اللوحة
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.font = `bold 54px '${font}'`;
+      ctx.font = `bold ${fontSize}px '${font}'`;
 
       const x = canvas.width / 2;
       const y = canvas.height / 2;
 
-      if (style === "3d") {
-        const depth = 6;
-        for (let i = depth; i > 0; i--) {
-          ctx.fillStyle = `rgba(0, 0, 0, ${0.1 + i * 0.07})`;
-          ctx.fillText(name, x + i, y + i);
-        }
-
-        ctx.fillStyle = "#ffffff";
-        ctx.strokeStyle = "#0f0f0f";
-        ctx.lineWidth = 2;
-        ctx.fillText(name, x, y);
-        ctx.strokeText(name, x, y);
+      // رسم الظل الطبقي (3D)
+      for (let i = shadowDepth; i > 0; i--) {
+        ctx.fillStyle = shadowColor;
+        ctx.fillText(name, x + i * shadowX / shadowDepth, y + i * shadowY / shadowDepth);
       }
 
-      else if (style === "geometric") {
-        ctx.fillStyle = "#00ffd0";
-        ctx.strokeStyle = "#111";
-        ctx.lineWidth = 3;
-        ctx.fillText(name, x, y);
+      // النص الرئيسي
+      ctx.fillStyle = textColor;
+      ctx.fillText(name, x, y);
+
+      // الخط الخارجي (Stroke)
+      if (strokeWidth > 0) {
+        ctx.lineWidth = strokeWidth;
+        ctx.strokeStyle = "#000000";
         ctx.strokeText(name, x, y);
-      }
-
-      else if (style === "artistic") {
-        const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-        gradient.addColorStop(0, "#ff6a00");
-        gradient.addColorStop(1, "#ffd700");
-
-        ctx.fillStyle = gradient;
-        ctx.shadowColor = "rgba(255, 200, 0, 0.4)";
-        ctx.shadowBlur = 10;
-        ctx.fillText(name, x, y);
       }
     }
 
     function downloadLogo() {
       const canvas = document.getElementById("logoCanvas");
       const link = document.createElement("a");
-      link.download = "logo.png";
+      link.download = "logoo.png";
       link.href = canvas.toDataURL("image/png");
       link.click();
     }
+
+    // توليد تلقائي عند الفتح
+    window.onload = generateLogo;
   </script>
 </body>
 </html>
