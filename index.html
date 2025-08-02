@@ -1,92 +1,127 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>Logoo - تصميم شعار احترافي</title>
+  <meta charset="UTF-8" />
+  <title>Logoo - لوغو متحرك وفني</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- خطوط Google -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo&family=Pacifico&display=swap" rel="stylesheet">
+
   <style>
     body {
+      margin: 0;
+      background: #111;
       font-family: 'Cairo', sans-serif;
-      background: #f8f8f8;
+      color: #fff;
       text-align: center;
       padding: 30px;
-      margin: 0;
     }
 
     .container {
-      background: #fff;
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
       max-width: 800px;
       margin: auto;
+      background: #1a1a1a;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
     }
 
     h1 {
+      font-size: 26px;
       margin-bottom: 20px;
     }
 
-    .control-group {
+    .controls {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 15px;
-      margin-bottom: 15px;
+      margin-bottom: 25px;
     }
 
     .control {
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
       font-size: 14px;
-      width: 160px;
+      color: #ccc;
     }
 
     .control input, .control select {
       padding: 6px 8px;
-      font-size: 14px;
       border-radius: 6px;
-      border: 1px solid #ccc;
+      border: none;
+      margin-top: 5px;
+      font-size: 14px;
+      min-width: 120px;
+    }
+
+    svg {
+      width: 100%;
+      height: 400px;
+      overflow: visible;
+    }
+
+    .char {
+      font-size: 40px;
+      font-weight: bold;
+      fill: white;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+      opacity: 0;
+      animation: fadeIn 1s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.5) rotate(0deg);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(360deg);
+      }
     }
 
     button {
       padding: 12px 24px;
       font-size: 16px;
-      margin: 10px 5px;
-      background: #222;
-      color: white;
+      background-color: #fff;
+      color: #111;
       border: none;
       border-radius: 6px;
       cursor: pointer;
+      margin-top: 15px;
+      transition: 0.3s ease;
     }
 
     button:hover {
-      background-color: #444;
-    }
-
-    canvas {
-      border: 1px solid #aaa;
-      margin-top: 20px;
-      max-width: 100%;
+      background-color: #ddd;
     }
 
     footer {
       margin-top: 30px;
-      font-size: 13px;
+      font-size: 14px;
+      color: #888;
     }
 
     footer a {
-      color: #444;
+      color: #fff;
       text-decoration: none;
       font-weight: bold;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h1>✨ صمّم شعارك الاحترافي</h1>
+    <h1>🎨 حوّل اسمك إلى لوغو متحرك فني</h1>
 
-    <div class="control-group">
+    <div class="controls">
       <div class="control">
         <label>نص الشعار</label>
         <input type="text" id="nameInput" value="Logoo" />
@@ -96,20 +131,9 @@
         <label>الخط</label>
         <select id="fontSelect">
           <option value="Cairo">Cairo</option>
-          <option value="Arial">Arial</option>
-          <option value="Montserrat">Montserrat</option>
           <option value="Pacifico">Pacifico</option>
+          <option value="Arial">Arial</option>
         </select>
-      </div>
-
-      <div class="control">
-        <label>حجم الخط</label>
-        <input type="range" id="fontSize" min="20" max="100" value="54" />
-      </div>
-
-      <div class="control">
-        <label>سماكة الخط الخارجي</label>
-        <input type="range" id="strokeWidth" min="0" max="10" value="2" />
       </div>
 
       <div class="control">
@@ -121,32 +145,11 @@
         <label>لون الخلفية</label>
         <input type="color" id="bgColor" value="#1e1e1e" />
       </div>
-
-      <div class="control">
-        <label>لون الظل</label>
-        <input type="color" id="shadowColor" value="#000000" />
-      </div>
-
-      <div class="control">
-        <label>عمق الظل (3D)</label>
-        <input type="range" id="shadowDepth" min="0" max="15" value="6" />
-      </div>
-
-      <div class="control">
-        <label>إزاحة الظل X</label>
-        <input type="number" id="shadowX" value="3" />
-      </div>
-
-      <div class="control">
-        <label>إزاحة الظل Y</label>
-        <input type="number" id="shadowY" value="3" />
-      </div>
     </div>
 
-    <button onclick="generateLogo()">🔄 توليد الشعار</button>
-    <button onclick="downloadLogo()">⬇️ تحميل الشعار</button>
+    <button onclick="generateAnimatedLogo()">✨ توليد الشعار المتحرك</button>
 
-    <canvas id="logoCanvas" width="600" height="250"></canvas>
+    <svg id="logoSVG" viewBox="0 0 600 600"></svg>
   </div>
 
   <footer>
@@ -154,61 +157,45 @@
   </footer>
 
   <script>
-    function generateLogo() {
-      const canvas = document.getElementById("logoCanvas");
-      const ctx = canvas.getContext("2d");
-
-      // البيانات من الإدخالات
-      const name = document.getElementById("nameInput").value || "LOGOO";
+    function generateAnimatedLogo() {
+      const name = document.getElementById("nameInput").value.trim() || "Logoo";
       const font = document.getElementById("fontSelect").value;
-      const fontSize = parseInt(document.getElementById("fontSize").value);
-      const strokeWidth = parseInt(document.getElementById("strokeWidth").value);
       const textColor = document.getElementById("textColor").value;
       const bgColor = document.getElementById("bgColor").value;
-      const shadowColor = document.getElementById("shadowColor").value;
-      const shadowDepth = parseInt(document.getElementById("shadowDepth").value);
-      const shadowX = parseInt(document.getElementById("shadowX").value);
-      const shadowY = parseInt(document.getElementById("shadowY").value);
 
-      // إعداد اللوحة
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = bgColor;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.font = `bold ${fontSize}px '${font}'`;
+      const svg = document.getElementById("logoSVG");
+      svg.innerHTML = ""; // مسح المحتوى السابق
+      document.body.style.backgroundColor = bgColor;
 
-      const x = canvas.width / 2;
-      const y = canvas.height / 2;
+      const radius = 150;
+      const centerX = 300;
+      const centerY = 300;
+      const angleStep = 360 / name.length;
 
-      // رسم الظل الطبقي (3D)
-      for (let i = shadowDepth; i > 0; i--) {
-        ctx.fillStyle = shadowColor;
-        ctx.fillText(name, x + i * shadowX / shadowDepth, y + i * shadowY / shadowDepth);
-      }
+      for (let i = 0; i < name.length; i++) {
+        const char = name[i];
+        const angle = i * angleStep - 90;
+        const rad = angle * (Math.PI / 180);
+        const x = centerX + radius * Math.cos(rad);
+        const y = centerY + radius * Math.sin(rad);
 
-      // النص الرئيسي
-      ctx.fillStyle = textColor;
-      ctx.fillText(name, x, y);
+        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        text.setAttribute("x", x);
+        text.setAttribute("y", y);
+        text.setAttribute("text-anchor", "middle");
+        text.setAttribute("dominant-baseline", "middle");
+        text.setAttribute("fill", textColor);
+        text.setAttribute("font-family", font);
+        text.setAttribute("class", "char");
+        text.setAttribute("style", `animation-delay: ${i * 0.1}s`);
+        text.textContent = char;
 
-      // الخط الخارجي (Stroke)
-      if (strokeWidth > 0) {
-        ctx.lineWidth = strokeWidth;
-        ctx.strokeStyle = "#000000";
-        ctx.strokeText(name, x, y);
+        svg.appendChild(text);
       }
     }
 
-    function downloadLogo() {
-      const canvas = document.getElementById("logoCanvas");
-      const link = document.createElement("a");
-      link.download = "logoo.png";
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-    }
-
-    // توليد تلقائي عند الفتح
-    window.onload = generateLogo;
+    window.onload = generateAnimatedLogo;
   </script>
+
 </body>
 </html>
