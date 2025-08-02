@@ -7,42 +7,41 @@ function generateLogo() {
   const canvas = document.getElementById("logoCanvas");
   const ctx = canvas.getContext("2d");
 
-  // تنظيف اللوحة
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // تعيين خلفية
   ctx.fillStyle = bgColor;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // إعدادات النص
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.font = `bold 54px ${font}`;
+  const x = canvas.width / 2;
+  const y = canvas.height / 2;
+  const text = name;
 
-  // أسلوب 3D
   if (style === "3d") {
-    ctx.shadowColor = "rgba(0, 0, 0, 0.35)";
-    ctx.shadowOffsetX = 4;
-    ctx.shadowOffsetY = 4;
-    ctx.shadowBlur = 8;
-    ctx.fillStyle = "#ffffff";
-    ctx.fillText(name.toUpperCase(), canvas.width / 2, canvas.height / 2);
+    // إعدادات الطبقات الثلاثية
+    const depth = 6;
+    for (let i = depth; i > 0; i--) {
+      ctx.fillStyle = `rgba(0,0,0,${0.1 + i * 0.07})`;
+      ctx.fillText(text, x + i, y + i);
+    }
 
-    ctx.shadowColor = "transparent";
-    ctx.fillStyle = "#2b2b2b";
-    ctx.fillText(name.toUpperCase(), canvas.width / 2 + 2, canvas.height / 2 + 2);
+    // النص الأساسي
+    ctx.fillStyle = "#ffffff";
+    ctx.strokeStyle = "#0f0f0f";
+    ctx.lineWidth = 2;
+    ctx.fillText(text, x, y);
+    ctx.strokeText(text, x, y);
   }
-  
-  // أسلوب هندسي
+
   else if (style === "geometric") {
     ctx.fillStyle = "#00ffd0";
     ctx.strokeStyle = "#111";
     ctx.lineWidth = 3;
-    ctx.fillText(name.toUpperCase(), canvas.width / 2, canvas.height / 2);
-    ctx.strokeText(name.toUpperCase(), canvas.width / 2, canvas.height / 2);
+    ctx.fillText(text, x, y);
+    ctx.strokeText(text, x, y);
   }
-  
-  // أسلوب فني (Artistic)
+
   else if (style === "artistic") {
     const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
     gradient.addColorStop(0, "#ff6a00");
@@ -51,6 +50,6 @@ function generateLogo() {
     ctx.fillStyle = gradient;
     ctx.shadowColor = "rgba(255, 200, 0, 0.4)";
     ctx.shadowBlur = 10;
-    ctx.fillText(name.toUpperCase(), canvas.width / 2, canvas.height / 2);
+    ctx.fillText(text, x, y);
   }
 }
