@@ -1,55 +1,69 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Logoo - توليد الشعار</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Logoo - توليد شعار ثلاثي الأبعاد</title>
+
+  <!-- خط مزخرف -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
   <style>
     body {
-      background-color: #ffeb3b;
+      background-color: #f0f0f0;
       font-family: 'Cairo', sans-serif;
-      color: #333;
       text-align: center;
-      padding: 40px 20px;
+      padding: 50px 20px;
       margin: 0;
     }
 
-    h1 {
-      color: #333;
-      font-size: 28px;
-      margin-bottom: 20px;
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      max-width: 700px;
+      margin: auto;
     }
 
-    input, select, button {
-      margin: 10px;
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #222;
+    }
+
+    input[type="text"], select, input[type="color"] {
       padding: 12px 16px;
       font-size: 16px;
-      border-radius: 8px;
-      border: none;
-      outline: none;
+      margin: 10px;
+      width: 90%;
+      max-width: 300px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
       box-sizing: border-box;
     }
 
-    input[type="color"] {
-      cursor: pointer;
-    }
-
     button {
-      background-color: #444;
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #222;
       color: white;
-      font-weight: bold;
+      border: none;
+      border-radius: 6px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      margin-top: 15px;
+      transition: 0.3s ease;
     }
 
     button:hover {
-      background-color: #666;
+      background-color: #444;
     }
 
     canvas {
-      border: 2px solid #333;
-      margin-top: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      margin-top: 30px;
+      border: 1px solid #ccc;
+      max-width: 100%;
+      height: auto;
     }
 
     footer {
@@ -65,72 +79,106 @@
     }
 
     footer a:hover {
-      color: #333;
+      color: #222;
     }
   </style>
 </head>
 <body>
-  <h1>إنشاء شعار Logoo</h1>
-  <input type="text" id="nameInput" placeholder="ادخل اسم الشعار" />
-  <select id="fontSelect">
-    <option value="Cairo">Cairo</option>
-    <option value="Arial">Arial</option>
-    <option value="Montserrat">Montserrat</option>
-  </select>
-  <select id="styleSelect">
-    <option value="3d">ثلاثي الأبعاد</option>
-    <option value="geometric">هندسي</option>
-    <option value="artistic">زخرفي / حر</option>
-  </select>
-  <input type="color" id="bgColorPicker" value="#1e1e1e" />
-  <canvas id="logoCanvas" width="420" height="200"></canvas>
-  <button onclick="generateLogo()">أنشئ الشعار</button>
-  
+
+  <div class="container">
+    <h1>إنشاء شعار ثلاثي الأبعاد - Logoo</h1>
+
+    <input type="text" id="nameInput" placeholder="ادخل اسم الشعار" />
+    <br />
+
+    <select id="fontSelect">
+      <option value="Cairo">Cairo</option>
+      <option value="Arial">Arial</option>
+      <option value="Montserrat">Montserrat</option>
+      <option value="Pacifico">Pacifico</option>
+    </select>
+
+    <select id="styleSelect">
+      <option value="3d">ثلاثي الأبعاد</option>
+      <option value="geometric">هندسي</option>
+      <option value="artistic">زخرفي / حر</option>
+    </select>
+
+    <br />
+    <input type="color" id="bgColorPicker" value="#1e1e1e" />
+
+    <br />
+    <button onclick="generateLogo()">🔄 أنشئ الشعار</button>
+    <button onclick="downloadLogo()">⬇️ تحميل الشعار</button>
+
+    <canvas id="logoCanvas" width="600" height="250"></canvas>
+  </div>
+
   <footer>
     <p>تم التطوير بواسطة <a href="https://github.com/alkasm1" target="_blank">رأفت عمر</a></p>
   </footer>
 
   <script>
-    // مثال مبدئي على دالة generateLogo لتوليد الشعار باستخدام المدخلات
     function generateLogo() {
-      const canvas = document.getElementById("logoCanvas");
-      const ctx = canvas.getContext("2d");
-      const name = document.getElementById("nameInput").value;
+      const name = document.getElementById("nameInput").value || "LOGOO";
       const font = document.getElementById("fontSelect").value;
       const style = document.getElementById("styleSelect").value;
       const bgColor = document.getElementById("bgColorPicker").value;
-      
-      // مسح اللوحة السابقة
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // تحديد خلفية الشعار
+      const canvas = document.getElementById("logoCanvas");
+      const ctx = canvas.getContext("2d");
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // تحديد الخط
-      ctx.font = `40px ${font}`;
+
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillStyle = "white";
+      ctx.font = `bold 54px '${font}'`;
 
-      // إضافة تأثيرات حسب النمط
+      const x = canvas.width / 2;
+      const y = canvas.height / 2;
+
       if (style === "3d") {
-        ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
-        ctx.shadowOffsetX = 3;
-        ctx.shadowOffsetY = 3;
-        ctx.shadowBlur = 10;
-      } else if (style === "geometric") {
-        ctx.strokeStyle = "#ffffff";
-        ctx.lineWidth = 3;
-        ctx.strokeText(name, canvas.width / 2, canvas.height / 2);
-        ctx.fillText(name, canvas.width / 2, canvas.height / 2);
-      } else if (style === "artistic") {
-        ctx.font = `italic 40px ${font}`;
-        ctx.fillStyle = "yellow";
+        const depth = 6;
+        for (let i = depth; i > 0; i--) {
+          ctx.fillStyle = `rgba(0, 0, 0, ${0.1 + i * 0.07})`;
+          ctx.fillText(name, x + i, y + i);
+        }
+
+        ctx.fillStyle = "#ffffff";
+        ctx.strokeStyle = "#0f0f0f";
+        ctx.lineWidth = 2;
+        ctx.fillText(name, x, y);
+        ctx.strokeText(name, x, y);
       }
 
-      // رسم النص
-      ctx.fillText(name, canvas.width / 2, canvas.height / 2);
+      else if (style === "geometric") {
+        ctx.fillStyle = "#00ffd0";
+        ctx.strokeStyle = "#111";
+        ctx.lineWidth = 3;
+        ctx.fillText(name, x, y);
+        ctx.strokeText(name, x, y);
+      }
+
+      else if (style === "artistic") {
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+        gradient.addColorStop(0, "#ff6a00");
+        gradient.addColorStop(1, "#ffd700");
+
+        ctx.fillStyle = gradient;
+        ctx.shadowColor = "rgba(255, 200, 0, 0.4)";
+        ctx.shadowBlur = 10;
+        ctx.fillText(name, x, y);
+      }
+    }
+
+    function downloadLogo() {
+      const canvas = document.getElementById("logoCanvas");
+      const link = document.createElement("a");
+      link.download = "logo.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
     }
   </script>
 </body>
