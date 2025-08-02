@@ -2,29 +2,29 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>Logoo - لوغو متحرك وفني</title>
+  <title>لوحة الإبداع - شعار احترافي</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- خطوط Google -->
-  <link href="https://fonts.googleapis.com/css2?family=Cairo&family=Pacifico&display=swap" rel="stylesheet">
+
+  <!-- خطوط عربية وجوجل -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Cairo&family=Pacifico&family=Tajawal&display=swap" rel="stylesheet">
 
   <style>
     body {
-      margin: 0;
-      background: #111;
+      background-color: #111;
       font-family: 'Cairo', sans-serif;
       color: #fff;
       text-align: center;
-      padding: 30px;
+      margin: 0;
+      padding: 30px 10px;
     }
 
     .container {
-      max-width: 800px;
-      margin: auto;
-      background: #1a1a1a;
-      padding: 30px;
+      background: #1e1e1e;
+      padding: 25px;
       border-radius: 16px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+      max-width: 900px;
+      margin: auto;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
     }
 
     h1 {
@@ -37,94 +37,60 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 15px;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
 
     .control {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
       font-size: 14px;
-      color: #ccc;
+      color: #ddd;
     }
 
     .control input, .control select {
-      padding: 6px 8px;
+      padding: 8px;
       border-radius: 6px;
       border: none;
-      margin-top: 5px;
       font-size: 14px;
-      min-width: 120px;
+      margin-top: 4px;
     }
 
-    svg {
-      width: 100%;
-      height: 400px;
-      overflow: visible;
-    }
-
-    .char {
-      font-size: 40px;
-      font-weight: bold;
-      fill: white;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
-      opacity: 0;
-      animation: fadeIn 1s ease-out forwards;
-    }
-
-    @keyframes fadeIn {
-      0% {
-        opacity: 0;
-        transform: scale(0.5) rotate(0deg);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1) rotate(360deg);
-      }
+    canvas {
+      border: 1px solid #555;
+      margin-top: 20px;
+      max-width: 100%;
     }
 
     button {
-      padding: 12px 24px;
-      font-size: 16px;
-      background-color: #fff;
-      color: #111;
+      padding: 10px 20px;
+      margin: 10px 5px;
+      background: #fff;
+      color: #000;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      margin-top: 15px;
-      transition: 0.3s ease;
+      font-weight: bold;
     }
 
     button:hover {
-      background-color: #ddd;
+      background: #ddd;
     }
 
     footer {
       margin-top: 30px;
-      font-size: 14px;
-      color: #888;
-    }
-
-    footer a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
+      font-size: 13px;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h1>🎨 حوّل اسمك إلى لوغو متحرك فني</h1>
+    <h1>🎨 لوحة الإبداع - صمم شعارك الحر</h1>
 
     <div class="controls">
       <div class="control">
         <label>نص الشعار</label>
-        <input type="text" id="nameInput" value="Logoo" />
+        <input type="text" id="nameInput" value="لوغو" />
       </div>
 
       <div class="control">
@@ -132,6 +98,8 @@
         <select id="fontSelect">
           <option value="Cairo">Cairo</option>
           <option value="Pacifico">Pacifico</option>
+          <option value="Amiri">Amiri</option>
+          <option value="Tajawal">Tajawal</option>
           <option value="Arial">Arial</option>
         </select>
       </div>
@@ -142,60 +110,128 @@
       </div>
 
       <div class="control">
-        <label>لون الخلفية</label>
-        <input type="color" id="bgColor" value="#1e1e1e" />
+        <label>لون الظل</label>
+        <input type="color" id="shadowColor" value="#000000" />
+      </div>
+
+      <div class="control">
+        <label>سماكة الخط</label>
+        <input type="range" id="strokeWidth" min="0" max="10" value="2" />
+      </div>
+
+      <div class="control">
+        <label>عمق الظل</label>
+        <input type="range" id="shadowDepth" min="0" max="15" value="6" />
+      </div>
+
+      <div class="control">
+        <label>خلفية (صورة)</label>
+        <input type="file" id="bgImageInput" accept="image/*" />
+      </div>
+
+      <div class="control">
+        <label>تحريك X</label>
+        <input type="range" id="moveX" min="-100" max="100" value="0" />
+      </div>
+
+      <div class="control">
+        <label>تحريك Y</label>
+        <input type="range" id="moveY" min="-100" max="100" value="0" />
+      </div>
+
+      <div class="control">
+        <label>حجم الخط</label>
+        <input type="range" id="fontSize" min="20" max="120" value="60" />
       </div>
     </div>
 
-    <button onclick="generateAnimatedLogo()">✨ توليد الشعار المتحرك</button>
+    <button onclick="drawLogo()">🎯 توليد الشعار</button>
+    <button onclick="downloadCanvas()">⬇️ تحميل</button>
 
-    <svg id="logoSVG" viewBox="0 0 600 600"></svg>
+    <canvas id="logoCanvas" width="800" height="300"></canvas>
   </div>
 
   <footer>
-    <p>تم التطوير بواسطة <a href="https://github.com/alkasm1" target="_blank">رأفت عمر</a></p>
+    <p>تم التطوير بواسطة <strong>أنت + مساعدك الذكي</strong> 🎨</p>
   </footer>
 
   <script>
-    function generateAnimatedLogo() {
-      const name = document.getElementById("nameInput").value.trim() || "Logoo";
+    let bgImage = null;
+
+    document.getElementById("bgImageInput").addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const img = new Image();
+          img.onload = function () {
+            bgImage = img;
+            drawLogo();
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function drawLogo() {
+      const canvas = document.getElementById("logoCanvas");
+      const ctx = canvas.getContext("2d");
+
+      const name = document.getElementById("nameInput").value || "لوغو";
       const font = document.getElementById("fontSelect").value;
       const textColor = document.getElementById("textColor").value;
-      const bgColor = document.getElementById("bgColor").value;
+      const shadowColor = document.getElementById("shadowColor").value;
+      const strokeWidth = parseInt(document.getElementById("strokeWidth").value);
+      const shadowDepth = parseInt(document.getElementById("shadowDepth").value);
+      const moveX = parseInt(document.getElementById("moveX").value);
+      const moveY = parseInt(document.getElementById("moveY").value);
+      const fontSize = parseInt(document.getElementById("fontSize").value);
 
-      const svg = document.getElementById("logoSVG");
-      svg.innerHTML = ""; // مسح المحتوى السابق
-      document.body.style.backgroundColor = bgColor;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const radius = 150;
-      const centerX = 300;
-      const centerY = 300;
-      const angleStep = 360 / name.length;
+      // خلفية (صورة أو لون)
+      if (bgImage) {
+        ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
+      } else {
+        ctx.fillStyle = "#1e1e1e";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
 
-      for (let i = 0; i < name.length; i++) {
-        const char = name[i];
-        const angle = i * angleStep - 90;
-        const rad = angle * (Math.PI / 180);
-        const x = centerX + radius * Math.cos(rad);
-        const y = centerY + radius * Math.sin(rad);
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = `bold ${fontSize}px '${font}'`;
 
-        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        text.setAttribute("x", x);
-        text.setAttribute("y", y);
-        text.setAttribute("text-anchor", "middle");
-        text.setAttribute("dominant-baseline", "middle");
-        text.setAttribute("fill", textColor);
-        text.setAttribute("font-family", font);
-        text.setAttribute("class", "char");
-        text.setAttribute("style", `animation-delay: ${i * 0.1}s`);
-        text.textContent = char;
+      const x = canvas.width / 2 + moveX;
+      const y = canvas.height / 2 + moveY;
 
-        svg.appendChild(text);
+      // تأثير 3D
+      for (let i = shadowDepth; i > 0; i--) {
+        ctx.fillStyle = shadowColor;
+        ctx.fillText(name, x + i, y + i);
+      }
+
+      // النص الأساسي
+      ctx.fillStyle = textColor;
+      ctx.fillText(name, x, y);
+
+      // سماكة الخط (stroke)
+      if (strokeWidth > 0) {
+        ctx.lineWidth = strokeWidth;
+        ctx.strokeStyle = "#000000";
+        ctx.strokeText(name, x, y);
       }
     }
 
-    window.onload = generateAnimatedLogo;
-  </script>
+    function downloadCanvas() {
+      const canvas = document.getElementById("logoCanvas");
+      const link = document.createElement("a");
+      link.download = "my_logo.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    }
 
+    window.onload = drawLogo;
+  </script>
 </body>
 </html>
