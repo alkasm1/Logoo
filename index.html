@@ -2,194 +2,128 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>صمم شعارك الاحترافي 🎨</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Cairo&family=Pacifico&family=Tajawal&display=swap" rel="stylesheet">
-
+  <title>لوحة الشعارات - تصميم فني</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo&family=Amiri&family=Pacifico&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: #111;
+      background: #111;
       font-family: 'Cairo', sans-serif;
       color: #fff;
-      text-align: center;
       margin: 0;
-      padding: 30px 10px;
+      padding: 20px;
+      text-align: center;
     }
 
-    .container {
-      background: #1e1e1e;
-      padding: 30px;
-      border-radius: 16px;
-      max-width: 850px;
-      margin: auto;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
-    }
-
-    h1 {
-      font-size: 28px;
+    .toolbar {
       margin-bottom: 20px;
-    }
-
-    .controls {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 15px;
-      margin-bottom: 25px;
+      gap: 10px;
     }
 
-    .control {
-      display: flex;
-      flex-direction: column;
-      font-size: 14px;
-      color: #ddd;
-      min-width: 140px;
-    }
-
-    .control input, .control select {
+    .toolbar input, .toolbar select {
       padding: 8px;
       border-radius: 6px;
       border: none;
       font-size: 14px;
-      margin-top: 4px;
     }
 
     canvas {
       border: 1px solid #444;
-      margin-top: 25px;
-      max-width: 100%;
+      background: #222;
+      margin-top: 20px;
     }
 
     button {
-      padding: 10px 25px;
-      margin: 15px 10px;
+      padding: 10px 20px;
+      border: none;
       background: #00ffd0;
       color: #000;
-      border: none;
+      font-weight: bold;
       border-radius: 6px;
       cursor: pointer;
-      font-weight: bold;
     }
 
     button:hover {
       background: #00e0bb;
     }
-
-    footer {
-      margin-top: 30px;
-      font-size: 13px;
-      color: #888;
-    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🎨 صمم شعارك الاحترافي</h1>
 
-    <div class="controls">
-      <div class="control">
-        <label>نص الشعار</label>
-        <input type="text" id="nameInput" value="لوغو" />
-      </div>
+  <h1>🎨 لوحة الشعارات الفنية</h1>
 
-      <div class="control">
-        <label>الخط</label>
-        <select id="fontSelect">
-          <option value="Cairo">Cairo</option>
-          <option value="Pacifico">Pacifico</option>
-          <option value="Amiri">Amiri</option>
-          <option value="Tajawal">Tajawal</option>
-        </select>
-      </div>
-
-      <div class="control">
-        <label>نمط التصميم</label>
-        <select id="styleSelect">
-          <option value="3d">ثلاثي الأبعاد</option>
-          <option value="geometric">هندسي</option>
-          <option value="artistic">فني</option>
-        </select>
-      </div>
-
-      <div class="control">
-        <label>لون الخلفية</label>
-        <input type="color" id="bgColorPicker" value="#1e1e1e" />
-      </div>
-    </div>
-
-    <button onclick="generateLogo()">🎯 توليد الشعار</button>
-    <button onclick="downloadCanvas()">⬇️ تحميل</button>
-
-    <canvas id="logoCanvas" width="800" height="300"></canvas>
+  <div class="toolbar">
+    <input type="text" id="textInput" placeholder="اكتب الاسم" value="شعارك الفني" />
+    <select id="fontSelect">
+      <option value="Cairo">Cairo</option>
+      <option value="Amiri">Amiri</option>
+      <option value="Pacifico">Pacifico</option>
+    </select>
+    <input type="color" id="colorPicker" value="#ffffff" />
+    <label><input type="checkbox" id="shadowToggle"> ظل</label>
+    <input type="file" id="bgUpload" accept="image/*">
+    <button onclick="addText()">➕ أضف النص</button>
+    <button onclick="download()">⬇️ تحميل الشعار</button>
   </div>
 
-  <footer>
-    تم التطوير بواسطة <strong>أنت + ChatGPT</strong> 🚀
-  </footer>
+  <canvas id="canvas" width="900" height="400"></canvas>
 
   <script>
-    function generateLogo() {
-      const name = document.getElementById("nameInput").value || "LOGO";
+    const canvas = new fabric.Canvas('canvas', {
+      preserveObjectStacking: true
+    });
+
+    // خلفية افتراضية
+    canvas.setBackgroundColor('#1e1e1e', canvas.renderAll.bind(canvas));
+
+    function addText() {
+      const textValue = document.getElementById("textInput").value || "شعار";
       const font = document.getElementById("fontSelect").value;
-      const style = document.getElementById("styleSelect").value;
-      const bgColor = document.getElementById("bgColorPicker").value;
+      const color = document.getElementById("colorPicker").value;
+      const shadow = document.getElementById("shadowToggle").checked;
 
-      const canvas = document.getElementById("logoCanvas");
-      const ctx = canvas.getContext("2d");
+      const text = new fabric.Textbox(textValue, {
+        left: canvas.width / 2,
+        top: canvas.height / 2,
+        originX: 'center',
+        originY: 'center',
+        fontFamily: font,
+        fill: color,
+        fontSize: 70,
+        textAlign: 'center',
+        shadow: shadow ? 'rgba(0,0,0,0.5) 5px 5px 10px' : null,
+        editable: true
+      });
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = bgColor;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.font = `bold 64px '${font}'`;
-      const x = canvas.width / 2;
-      const y = canvas.height / 2;
-
-      if (style === "3d") {
-        const depth = 6;
-        for (let i = depth; i > 0; i--) {
-          ctx.fillStyle = `rgba(0,0,0,${0.1 + i * 0.07})`;
-          ctx.fillText(name, x + i, y + i);
-        }
-        ctx.fillStyle = "#ffffff";
-        ctx.strokeStyle = "#0f0f0f";
-        ctx.lineWidth = 2;
-        ctx.fillText(name, x, y);
-        ctx.strokeText(name, x, y);
-      }
-
-      else if (style === "geometric") {
-        ctx.fillStyle = "#00ffd0";
-        ctx.strokeStyle = "#111";
-        ctx.lineWidth = 3;
-        ctx.fillText(name, x, y);
-        ctx.strokeText(name, x, y);
-      }
-
-      else if (style === "artistic") {
-        const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-        gradient.addColorStop(0, "#ff6a00");
-        gradient.addColorStop(1, "#ffd700");
-
-        ctx.fillStyle = gradient;
-        ctx.shadowColor = "rgba(255, 200, 0, 0.4)";
-        ctx.shadowBlur = 10;
-        ctx.fillText(name, x, y);
-      }
+      canvas.add(text).setActiveObject(text);
     }
 
-    function downloadCanvas() {
-      const canvas = document.getElementById("logoCanvas");
-      const link = document.createElement("a");
-      link.download = "logo.png";
-      link.href = canvas.toDataURL("image/png");
+    // تحميل صورة خلفية
+    document.getElementById("bgUpload").addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (f) {
+        fabric.Image.fromURL(f.target.result, function (img) {
+          img.scaleToWidth(canvas.width);
+          img.scaleToHeight(canvas.height);
+          canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+        });
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // تحميل الشعار كصورة
+    function download() {
+      const link = document.createElement('a');
+      link.download = 'logo.png';
+      link.href = canvas.toDataURL({ format: 'png' });
       link.click();
     }
-
-    // توليد افتراضي عند الفتح
-    window.onload = generateLogo;
   </script>
+
 </body>
 </html>
