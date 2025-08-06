@@ -1,4 +1,3 @@
-
 // main.js
 document.addEventListener('DOMContentLoaded', function() {
   const canvas = document.getElementById('logoCanvas');
@@ -14,19 +13,16 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // الانتقال إلى صفحة التصميم
   designBtn.addEventListener('click', function() {
-    // حفظ بيانات التصميم الحالية (يمكن استخدام localStorage)
+    // حفظ بيانات التصميم الحالية (باستخدام localStorage)
     const designData = {
       name: document.getElementById('nameInput').value,
       font: document.getElementById('fontSelect').value,
       style: document.getElementById('styleSelect').value,
-      shape: document.getElementById('shapeSelect').value,
       bgColor: document.getElementById('bgColorPicker').value,
       description: document.getElementById('description').value
     };
     
-    localStorage.setItem('logoDesignData', JSON.stringify(designData));
-    
-    // الانتقال إلى صفحة التصميم
+    localStorage.setItem('logoDesign', JSON.stringify(designData));
     window.location.href = 'designer.html';
   });
   
