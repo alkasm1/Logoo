@@ -19,7 +19,6 @@ function generateLogo() {
   const x = canvas.width / 2;
   const y = canvas.height / 2;
 
-  // تأثيرات بسيطة - يمكن التوسع لاحقًا
   if (style === "3d") {
     for (let i = 6; i > 0; i--) {
       ctx.fillStyle = `rgba(0,0,0,${0.1 + i * 0.1})`;
@@ -37,8 +36,6 @@ function generateLogo() {
     ctx.fillStyle = "#000";
     ctx.fillText(name, x, y);
   }
-
-  // الشكل: تقويس (موجة وقوس ستتم إضافتها في التصميم المتقدم)
 }
 
 function saveAndGo() {
