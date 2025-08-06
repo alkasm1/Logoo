@@ -48,3 +48,110 @@ document.addEventListener('DOMContentLoaded', function() {
       e.stopPropagation();
       
       // إزالة النشاط من جميع العناصر
+      designElements.forEach(el => el.classList.remove('active'));
+      
+      // تفعيل العنصر المحدد
+      this.classList.add('active');
+    });
+  });
+  
+  // إخفاء عناصر التحكم عند النقر في أي مكان آخر
+  document.addEventListener('click', function() {
+    designElements.forEach(el => el.classList.remove('active'));
+  });
+  
+  // تهيئة canvas عند التحميل
+  initCanvas();
+  
+  // تحميل بيانات التصميم من الصفحة الرئيسية
+  loadDesignData();
+  
+  // تهيئة وظيفة السحب والإفلات
+  initDragAndDrop();
+  
+  function initCanvas() {
+    // مسح canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // تعيين خلفية بيضاء
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // إضافة شبكة خفيفة
+    ctx.strokeStyle = '#f0f0f0';
+    ctx.lineWidth = 1;
+    
+    // رسم خطوط الشبكة الأفقية
+    for (let y = 0; y < canvas.height; y += 20) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(canvas.width, y);
+      ctx.stroke();
+    }
+    
+    // رسم خطوط الشبكة العمودية
+    for (let x = 0; x < canvas.width; x += 20) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, canvas.height);
+      ctx.stroke();
+    }
+    
+    // إضافة نص إرشادي
+    ctx.font = '24px Cairo';
+    ctx.fillStyle = '#cccccc';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('اسحب وأسقط العناصر هنا لإنشاء شعارك', canvas.width/2, canvas.height/2);
+  }
+  
+  function loadDesignData() {
+    const designData = JSON.parse(localStorage.getItem('logoDesign'));
+    if (designData) {
+      // يمكنك استخدام البيانات لتهيئة التصميم
+      console.log('تصميم تم تحميله:', designData);
+      // مثال: تعيين نص الشعار
+      document.querySelector('.design-element div').textContent = designData.name || 'شعارك هنا';
+    }
+  }
+  
+  function initDragAndDrop() {
+    const elements = document.querySelectorAll('.design-element');
+    
+    elements.forEach(element => {
+      element.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        
+        // إحضار العنصر للأمام
+        elements.forEach(el => {
+          el.style.zIndex = '1';
+        });
+        this.style.zIndex = '10';
+        
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+        
+        function elementDrag(e) {
+          e.preventDefault();
+          pos1 = pos3 - e.clientX;
+          pos2 = pos4 - e.clientY;
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+          
+          // تحديث موضع العنصر
+          element.style.top = (element.offsetTop - pos2) + "px";
+          element.style.left = (element.offsetLeft - pos1) + "px";
+        }
+        
+        function closeDragElement() {
+          document.onmouseup = null;
+          document.onmousemove = null;
+        }
+      });
+    });
+  }
+});
