@@ -1,0 +1,92 @@
+body {
+  margin: 0;
+  font-family: 'Cairo', sans-serif;
+  background-color: #f1f1f1;
+  direction: rtl;
+}
+
+.top-bar {
+  background-color: #e91e63;
+  color: white;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-btn, .undo-btn {
+  cursor: pointer;
+  font-size: 16px;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: #ddd;
+  height: 500px;
+}
+
+canvas {
+  background-color: #222;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #999;
+}
+
+.text-tools {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.text-tools.hidden {
+  display: none;
+}
+
+.text-tools button {
+  background-color: #e91e63;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  font-size: 18px;
+}
+
+.tool-bar {
+  display: flex;
+  justify-content: space-around;
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+  padding: 10px 0;
+}
+
+.tool-bar .tab {
+  background: none;
+  border: none;
+  font-size: 16px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.tool-bar .tab.active {
+  border-bottom: 2px solid #e91e63;
+  color: #e91e63;
+}
+
+.add-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #e91e63;
+  color: white;
+  font-size: 30px;
+  border: none;
+  padding: 15px;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
