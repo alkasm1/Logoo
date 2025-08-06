@@ -3,15 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🖌️ منصة التصميم</title>
-  <link rel="stylesheet" href="../css/style.css">
+  <title>🎨 منصة التصميم</title>
+  <link rel="stylesheet" href="../assets/css/designer.css">
 </head>
 <body>
-  <h1>🖌️ منصة التصميم الإبداعي</h1>
-  <canvas id="designCanvas" width="900" height="500"></canvas>
-  <br />
-  <button onclick="download()">⬇️ تحميل التصميم</button>
+  <!-- الشريط العلوي -->
+  <header class="top-bar">
+    <div class="menu-btn">☰</div>
+    <h1>مصمم الكتابة العربي</h1>
+    <div class="undo-btn">↩ <span id="undoCount">0</span> تراجع</div>
+  </header>
 
-  <script src="../js/designer.js"></script>
+  <!-- مساحة المعاينة -->
+  <main>
+    <canvas id="designCanvas" width="800" height="500"></canvas>
+
+    <!-- أدوات تحرير عند تحديد العنصر -->
+    <div class="text-tools hidden" id="textTools">
+      <button title="تحرير النص">✏</button>
+      <button title="تحريك">↔</button>
+      <button title="تدوير">🔁</button>
+      <button title="حذف">🗑</button>
+    </div>
+  </main>
+
+  <!-- أدوات التحكم -->
+  <footer class="tool-bar">
+    <button class="tab active">الخط</button>
+    <button class="tab">الحجم</button>
+    <button class="tab">اللون</button>
+    <button class="tab">تأثير</button>
+    <button class="tab">تسطير</button>
+    <button class="tab">3D</button>
+  </footer>
+
+  <!-- زر الإضافة العائم -->
+  <button class="add-btn" title="عنصر جديد">＋</button>
+
+  <script src="../assets/js/designer.js"></script>
 </body>
 </html>
