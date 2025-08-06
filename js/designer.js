@@ -2,24 +2,26 @@ window.onload = () => {
   const canvas = document.getElementById("designCanvas");
   const ctx = canvas.getContext("2d");
 
-  const logoData = localStorage.getItem("generatedLogo");
-  if (!logoData) {
-    alert("الرجاء إنشاء شعار أولاً.");
-    window.location.href = "../index.html";
-    return;
+  // جلب الشعار من localStorage إن وُجد
+  const data = localStorage.getItem("generatedLogo");
+  if (data) {
+    const img = new Image();
+    img.onload = () => ctx.drawImage(img, 0, 0);
+    img.src = data;
   }
 
-  const img = new Image();
-  img.onload = () => {
-    ctx.drawImage(img, 250, 150, 400, 200);
-  };
-  img.src = logoData;
-};
+  // أدوات التحديد – لاحقًا سنربطها مع عناصر قابلة للتحريك
+  const textTools = document.getElementById("textTools");
+  canvas.addEventListener("click", () => {
+    textTools.classList.remove("hidden");
+  });
 
-function download() {
-  const canvas = document.getElementById("designCanvas");
-  const link = document.createElement("a");
-  link.download = "design.png";
-  link.href = canvas.toDataURL("image/png");
-  link.click();
-}
+  // التبويبات
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      // لاحقًا: عرض الأدوات حسب التبويب
+    });
+  });
+};
