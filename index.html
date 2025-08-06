@@ -1,140 +1,51 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>صانع الشعارات الفنية - النسخة الاحترافية</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&family=Amiri&family=Tajawal:wght@700&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'Cairo', sans-serif;
-      background: linear-gradient(to left, #1e1e2f, #2c3e50);
-      color: #fff;
-      padding: 20px;
-    }
-    h1 { text-align: center; margin-bottom: 20px; }
-    .container {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-    label { display: block; margin-bottom: 5px; }
-    input, select, textarea {
-      width: 100%; padding: 10px;
-      border-radius: 8px; border: none;
-      font-size: 16px; margin-bottom: 10px;
-    }
-    canvas {
-      background-color: #fff;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
-      max-width: 100%; height: auto;
-    }
-    button {
-      padding: 12px;
-      background: #00ffd5;
-      border: none;
-      font-size: 18px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    button:hover { background: #00c3aa; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎨 صانع الشعارات الفنية</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo&family=Amiri&family=Tajawal&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <h1>🎨 صانع الشعارات الفنية - الإصدار الاحترافي</h1>
-  <div class="container">
-    <label for="nameInput">اسم الشعار</label>
-    <input type="text" id="nameInput" placeholder="أدخل الاسم هنا" /><label for="fontSelect">اختر الخط</label>
-<select id="fontSelect">
-  <option value="Cairo">Cairo</option>
-  <option value="Amiri">Amiri</option>
-  <option value="Tajawal">Tajawal</option>
-</select>
 
-<label for="styleSelect">نوع التأثير</label>
-<select id="styleSelect">
-  <option value="3d">ثلاثي الأبعاد</option>
-  <option value="neon">نيون</option>
-  <option value="gold">ذهبي</option>
-  <option value="glow">توهج ناعم</option>
-</select>
+  <label for="nameInput">اسم الشعار</label>
+  <input type="text" id="nameInput" placeholder="مثال: الإبداع العربي">
 
-<label for="shapeSelect">شكل الخط</label>
-<select id="shapeSelect">
-  <option value="straight">مستقيم</option>
-  <option value="arc">قوس</option>
-  <option value="wave">موجة</option>
-</select>
+  <label for="fontSelect">اختر الخط</label>
+  <select id="fontSelect">
+    <option value="Cairo">Cairo</option>
+    <option value="Amiri">Amiri</option>
+    <option value="Tajawal">Tajawal</option>
+  </select>
 
-<label for="bgColorPicker">لون الخلفية</label>
-<input type="color" id="bgColorPicker" value="#ffffff" />
+  <label for="styleSelect">نوع التأثير</label>
+  <select id="styleSelect">
+    <option value="3d">ثلاثي الأبعاد</option>
+    <option value="neon">نيون</option>
+    <option value="gold">ذهبي</option>
+    <option value="glow">توهج ناعم</option>
+  </select>
 
-<label for="description">وصف الشعار (اختياري)</label>
-<textarea id="description" rows="2" placeholder="مثال: شعار يعبر عن الإبداع العربي الفني..."></textarea>
+  <label for="shapeSelect">شكل الخط</label>
+  <select id="shapeSelect">
+    <option value="straight">مستقيم</option>
+    <option value="arc">قوس</option>
+    <option value="wave">موجة</option>
+  </select>
 
-<button onclick="generateLogo()">🎯 أنشئ الشعار الآن</button>
-<canvas id="logoCanvas" width="800" height="300"></canvas>
+  <label for="bgColorPicker">لون الخلفية</label>
+  <input type="color" id="bgColorPicker" value="#ffffff" />
 
-  </div>  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>  <script>
-    const canvas = new fabric.Canvas('logoCanvas');
+  <label for="description">وصف الشعار (اختياري)</label>
+  <textarea id="description" rows="2" placeholder="مثال: شعار يعبر عن الإبداع العربي الفني..."></textarea>
 
-    function generateLogo() {
-      const name = document.getElementById("nameInput").value || "LOGOO";
-      const font = document.getElementById("fontSelect").value;
-      const style = document.getElementById("styleSelect").value;
-      const shape = document.getElementById("shapeSelect").value;
-      const bgColor = document.getElementById("bgColorPicker").value;
+  <button onclick="generateLogo()">🎯 أنشئ الشعار الآن</button>
+  <button onclick="saveAndGo()">✨ الانتقال للتصميم</button>
 
-      canvas.clear();
-      canvas.setBackgroundColor(bgColor, canvas.renderAll.bind(canvas));
+  <canvas id="logoCanvas" width="800" height="300"></canvas>
 
-      let textObj = new fabric.Text(name, {
-        fontFamily: font,
-        fontSize: 64,
-        originX: 'center',
-        originY: 'center',
-        left: canvas.width / 2,
-        top: canvas.height / 2,
-        selectable: true,
-      });
-
-      // شكل الخط
-      if (shape === "arc") {
-        textObj.top = canvas.height / 2 + 50;
-        textObj.set({ angle: -10 });
-      } else if (shape === "wave") {
-        textObj.top = canvas.height / 2 - 20;
-        textObj.charSpacing = 120;
-        textObj.set({ angle: 5 });
-      }
-
-      // تأثيرات
-      if (style === "3d") {
-        textObj.set({ fill: "#ffffff", shadow: "rgba(0,0,0,0.4) 5px 5px 5px" });
-      } else if (style === "neon") {
-        textObj.set({ fill: "#00ffff", shadow: "0 0 15px #00ffff" });
-      } else if (style === "gold") {
-        textObj.setGradient("fill", {
-          x1: 0,
-          y1: 0,
-          x2: 0,
-          y2: textObj.height,
-          colorStops: {
-            0: "#FFD700",
-            1: "#FF8C00"
-          }
-        });
-      } else if (style === "glow") {
-        textObj.set({ fill: "#fff", shadow: "0 0 25px rgba(255,255,255,0.9)" });
-      }
-
-      canvas.add(textObj);
-      canvas.setActiveObject(textObj);
-      canvas.requestRenderAll();
-    }
-  </script></body>
+  <script src="js/main.js"></script>
+</body>
 </html>
