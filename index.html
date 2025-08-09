@@ -3,963 +3,368 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎨 صانع الشعارات الفنية - الإصدار الاحترافي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#5D5CDE',
-                        'primary-dark': '#4A49C7',
-                        secondary: '#4cc9f0',
-                        accent: '#f72585',
-                        dark: '#181818'
-                    },
-                    fontFamily: {
-                        'cairo': ['Cairo', 'sans-serif'],
-                        'amiri': ['Amiri', 'serif'],
-                        'tajawal': ['Tajawal', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
+    <title>LogoCraft 3D - صانع الشعارات ثلاثية الأبعاد</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Custom CSS for 3D effects and Arabic support */
-        .text-3d {
-            text-shadow: 
-                1px 1px 0 #ddd,
-                2px 2px 0 #ccc,
-                3px 3px 0 #bbb,
-                4px 4px 0 #aaa,
-                5px 5px 0 #999,
-                6px 6px 0 #888,
-                7px 7px 0 #777,
-                8px 8px 10px rgba(0,0,0,0.3);
+        :root {
+            --bg-dark: #121212;
+            --bg-light: #1E1E1E;
+            --primary: #007bff;
+            --primary-light: #54a3ff;
+            --text-light: #f8f9fa;
+            --text-muted: #adb5bd;
+            --border-color: rgba(255, 255, 255, 0.1);
         }
-        
-        .text-neon {
-            text-shadow: 
-                0 0 5px #4cc9f0,
-                0 0 10px #4cc9f0,
-                0 0 15px #4cc9f0,
-                0 0 20px #4cc9f0,
-                0 0 35px #4cc9f0,
-                0 0 40px #4cc9f0;
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
         }
-        
-        .text-gold {
-            background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 2px 2px 4px rgba(255,215,0,0.3);
-        }
-        
-        .text-glow {
-            text-shadow: 
-                0 0 10px rgba(93, 92, 222, 0.8),
-                0 0 20px rgba(93, 92, 222, 0.6),
-                0 0 30px rgba(93, 92, 222, 0.4);
-        }
-        
-        .text-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .shape-arc {
-            transform-origin: center;
-            animation: arcRotate 10s linear infinite;
-        }
-        
-        .shape-wave {
-            animation: waveMove 3s ease-in-out infinite;
-        }
-        
-        .shape-circle {
-            border-radius: 50%;
-            animation: circleFloat 4s ease-in-out infinite;
-        }
-        
-        @keyframes arcRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        @keyframes waveMove {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        @keyframes circleFloat {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-5px) scale(1.05); }
-        }
-        
-        .pulse-animation {
-            animation: pulseGlow 2s ease-in-out infinite;
-        }
-        
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(93, 92, 222, 0.4); }
-            50% { box-shadow: 0 0 30px rgba(93, 92, 222, 0.8); }
-        }
-        
-        .floating {
-            animation: floating 3s ease-in-out infinite;
-        }
-        
-        @keyframes floating {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .designer-grid {
-            display: grid;
-            grid-template-columns: 80px 1fr 320px;
-            grid-template-rows: 70px 1fr 80px;
+
+        .main-container {
+            display: flex;
             height: 100vh;
-            gap: 1px;
-            background: #e5e7eb;
+            width: 100%;
+        }
+
+        /* لوحة التحكم */
+        .controls-panel {
+            width: 350px;
+            background-color: var(--bg-light);
+            padding: 25px;
+            overflow-y: auto;
+            border-left: 1px solid var(--border-color);
+            transition: width 0.3s ease;
+        }
+
+        .panel-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .panel-header h1 {
+            font-size: 28px;
+            color: var(--primary);
+            margin: 0;
         }
         
-        .canvas-workspace {
-            background: repeating-conic-gradient(#f3f4f6 0% 25%, transparent 0% 50%) 50% / 20px 20px;
+        .panel-header p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .control-group {
+            margin-bottom: 25px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .input-field, .select-field {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        .input-field:focus, .select-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+        }
+
+        /* المسرح الرئيسي للشعار */
+        .stage {
+            flex-grow: 1;
             position: relative;
-            overflow: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, #2a2a2a 0%, var(--bg-dark) 100%);
+        }
+
+        #logo-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
         }
         
-        .design-element {
+        .loader {
             position: absolute;
-            cursor: move;
-            user-select: none;
-            border: 2px dashed transparent;
-            transition: all 0.2s ease;
-        }
-        
-        .design-element:hover, .design-element.active {
-            border-color: #5D5CDE;
-        }
-        
-        .element-handles {
-            position: absolute;
-            top: -30px;
-            left: 0;
-            display: none;
-            gap: 5px;
-            background: white;
-            padding: 5px;
-            border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            color: var(--primary);
+            font-size: 18px;
             z-index: 10;
         }
-        
-        .design-element.active .element-handles {
-            display: flex;
+
+        /* المرحلة الثانية: قوالب التصميم */
+        .mockups-section {
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
         }
         
-        .handle-btn {
-            width: 28px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 4px;
+        .mockups-section h3 {
+            margin-top: 0;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .mockup-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .mockup-item {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            overflow: hidden;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .mockup-item:hover {
+            transform: scale(1.05);
+            border-color: var(--primary);
+        }
+
+        .mockup-item img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
         
-        .handle-btn:hover {
-            background: #5D5CDE;
+        /* نافذة عرض القالب النهائي */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        #result-canvas {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 35px;
+            height: 35px;
+            background-color: var(--primary);
             color: white;
+            border-radius: 50%;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        
-        @media (max-width: 1024px) {
-            .designer-grid {
-                grid-template-columns: 60px 1fr;
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
             }
-            .control-panel {
-                position: fixed;
-                right: 0;
-                top: 70px;
-                height: calc(100vh - 150px);
-                transform: translateX(100%);
-                transition: transform 0.3s ease;
-                z-index: 50;
+            .controls-panel {
+                width: 100%;
+                height: 50vh;
+                border-left: none;
             }
-            .control-panel.open {
-                transform: translateX(0);
+            .stage {
+                height: 50vh;
             }
         }
     </style>
 </head>
-<body class="bg-white dark:bg-dark transition-colors duration-200">
-    <!-- Main Logo Creator Section -->
-    <div id="logoSection" class="min-h-screen">
-        <div class="max-w-7xl mx-auto p-4">
-            <!-- Header -->
-            <header class="text-center mb-12">
-                <div class="flex items-center justify-center gap-4 mb-6">
-                    <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center">
-                        <i class="fas fa-paint-brush text-white text-2xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-4xl font-bold text-gray-900 dark:text-white font-cairo">صانع الشعارات الفنية</h1>
-                        <p class="text-lg text-primary font-semibold">الإصدار الاحترافي</p>
-                    </div>
-                </div>
-                <p class="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
-                    أنشئ شعارات فريدة ومميزة لمشروعك أو علامتك التجارية باستخدام أدواتنا المتطورة والذكاء الاصطناعي. اختر من بين مجموعة متنوعة من الخطوط والتأثيرات والأشكال لتحصل على الشعار المثالي.
-                </p>
-            </header>
+<body>
 
-            <div class="grid lg:grid-cols-2 gap-8 mb-12">
-                <!-- Logo Creation Form -->
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8">
-                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
-                        <i class="fas fa-sliders-h text-primary"></i>
-                        إعدادات الشعار
-                    </h2>
-
-                    <div class="space-y-6">
-                        <div>
-                            <label for="logoName" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                <i class="fas fa-font ml-2"></i>
-                                اسم الشعار
-                            </label>
-                            <input type="text" id="logoName" 
-                                   class="w-full px-4 py-3 text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                                   placeholder="مثال: الإبداع العربي">
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label for="fontFamily" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    نوع الخط
-                                </label>
-                                <select id="fontFamily" class="w-full px-4 py-3 text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-                                    <option value="Cairo">Cairo</option>
-                                    <option value="Amiri">Amiri</option>
-                                    <option value="Tajawal">Tajawal</option>
-                                    <option value="Arial">Arial</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label for="textStyle" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    التأثير
-                                </label>
-                                <select id="textStyle" class="w-full px-4 py-3 text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-                                    <option value="3d">ثلاثي الأبعاد</option>
-                                    <option value="neon">نيون</option>
-                                    <option value="gold">ذهبي</option>
-                                    <option value="glow">توهج</option>
-                                    <option value="gradient">تدرج</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label for="textShape" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    شكل النص
-                                </label>
-                                <select id="textShape" class="w-full px-4 py-3 text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-                                    <option value="straight">مستقيم</option>
-                                    <option value="arc">قوس</option>
-                                    <option value="wave">موجة</option>
-                                    <option value="circle">دائري</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label for="bgColor" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    لون الخلفية
-                                </label>
-                                <input type="color" id="bgColor" value="#ffffff" 
-                                       class="w-full h-12 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer">
-                            </div>
-                        </div>
-
-                        <div>
-                            <label for="logoDescription" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                <i class="fas fa-robot ml-2"></i>
-                                وصف للذكاء الاصطناعي (اختياري)
-                            </label>
-                            <textarea id="logoDescription" rows="3" 
-                                      class="w-full px-4 py-3 text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-vertical"
-                                      placeholder="مثال: شعار عصري لشركة تقنية يعبر عن الابتكار والتطور..."></textarea>
-                        </div>
-
-                        <div class="flex gap-4">
-                            <button id="generateLogoBtn" 
-                                    class="flex-1 bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 pulse-animation">
-                                <i class="fas fa-magic ml-2"></i>
-                                <span id="generateBtnText">أنشئ الشعار</span>
-                                <div id="generateSpinner" class="hidden inline-block w-4 h-4 mr-2 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                            </button>
-                            <button id="openDesignerBtn" 
-                                    class="bg-secondary hover:bg-opacity-80 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200">
-                                <i class="fas fa-paint-brush ml-2"></i>
-                                التصميم المتقدم
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Preview Section -->
-                <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-200 dark:border-gray-700">
-                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
-                        <i class="fas fa-eye text-secondary"></i>
-                        معاينة الشعار
-                    </h2>
-
-                    <div id="logoPreview" class="w-full h-64 bg-gray-50 dark:bg-gray-700 rounded-xl flex items-center justify-center mb-6 overflow-hidden">
-                        <div id="previewText" class="text-4xl font-bold text-primary text-3d font-cairo transition-all duration-500">
-                            شعارك هنا
-                        </div>
-                    </div>
-
-                    <div id="aiLogoResult" class="hidden mb-6">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">شعار الذكاء الاصطناعي:</h3>
-                        <div id="aiLogoContainer" class="w-full h-64 bg-gray-50 dark:bg-gray-700 rounded-xl flex items-center justify-center">
-                            <div id="aiLogoPlaceholder" class="text-gray-500">جاري إنشاء الشعار...</div>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-3 gap-3">
-                        <button class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors">
-                            <i class="fas fa-download ml-1"></i>
-                            تحميل
-                        </button>
-                        <button class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors">
-                            <i class="fas fa-share-alt ml-1"></i>
-                            مشاركة
-                        </button>
-                        <button id="resetLogoBtn" class="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors">
-                            <i class="fas fa-undo ml-1"></i>
-                            إعادة تعيين
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Features Section -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 text-center floating">
-                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-palette text-primary text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">تصميمات لا متناهية</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">مئات التوليفات الممكنة لإنشاء شعار فريد</p>
-                </div>
-
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 text-center floating" style="animation-delay: 0.5s">
-                    <div class="w-16 h-16 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-robot text-secondary text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">ذكاء اصطناعي</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">إنشاء شعارات احترافية بالذكاء الاصطناعي</p>
-                </div>
-
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 text-center floating" style="animation-delay: 1s">
-                    <div class="w-16 h-16 bg-accent bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-download text-accent text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">جودة عالية</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">تحميل بدقة عالية وبصيغ متعددة</p>
-                </div>
-
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 text-center floating" style="animation-delay: 1.5s">
-                    <div class="w-16 h-16 bg-green-500 bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-mobile-alt text-green-500 text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">متجاوب</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">يعمل على جميع الأجهزة بكفاءة</p>
-                </div>
-            </div>
+    <div class="main-container">
+        <!-- المسرح الرئيسي لعرض الشعار ثلاثي الأبعاد -->
+        <div class="stage">
+            <div id="loader" class="loader">جارٍ تحميل الموارد...</div>
+            <canvas id="logo-canvas"></canvas>
         </div>
-    </div>
 
-    <!-- Advanced Designer Section -->
-    <div id="designerSection" class="hidden">
-        <div class="designer-grid">
-            <!-- Top Bar -->
-            <div class="col-span-3 bg-white dark:bg-gray-800 flex items-center justify-between px-6 shadow-sm border-b border-gray-200 dark:border-gray-700">
-                <div class="flex items-center gap-4">
-                    <button id="backToLogoBtn" class="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 p-2 rounded-lg transition-colors">
-                        <i class="fas fa-arrow-right text-gray-600 dark:text-gray-300"></i>
-                    </button>
-                    <div class="flex items-center gap-3">
-                        <i class="fas fa-paint-brush text-primary text-xl"></i>
-                        <span class="text-xl font-bold text-gray-900 dark:text-white">محرر التصميم المتقدم</span>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-3">
-                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                        <i class="fas fa-save ml-1"></i>
-                        حفظ
-                    </button>
-                    <button id="exportDesignBtn" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                        <i class="fas fa-download ml-1"></i>
-                        تصدير
-                    </button>
-                    <button id="templatesBtn" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                        <i class="fas fa-th-large ml-1"></i>
-                        قوالب
-                    </button>
-                </div>
+        <!-- لوحة التحكم -->
+        <div class="controls-panel">
+            <div class="panel-header">
+                <h1>LogoCraft 3D</h1>
+                <p>صمم شعارك ثلاثي الأبعاد</p>
             </div>
 
-            <!-- Sidebar -->
-            <div class="bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 overflow-y-auto">
-                <div class="p-2">
-                    <div class="space-y-2">
-                        <button class="sidebar-tool active w-full p-3 rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-tool="select">
-                            <i class="fas fa-mouse-pointer text-xl block mb-1"></i>
-                            <span class="text-xs">تحديد</span>
-                        </button>
-                        <button class="sidebar-tool w-full p-3 rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-tool="text">
-                            <i class="fas fa-font text-xl block mb-1"></i>
-                            <span class="text-xs">نص</span>
-                        </button>
-                        <button class="sidebar-tool w-full p-3 rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-tool="shapes">
-                            <i class="fas fa-shapes text-xl block mb-1"></i>
-                            <span class="text-xs">أشكال</span>
-                        </button>
-                        <button class="sidebar-tool w-full p-3 rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-tool="images">
-                            <i class="fas fa-image text-xl block mb-1"></i>
-                            <span class="text-xs">صور</span>
-                        </button>
-                        <button class="sidebar-tool w-full p-3 rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-tool="ai">
-                            <i class="fas fa-robot text-xl block mb-1"></i>
-                            <span class="text-xs">ذكاء</span>
-                        </button>
-                    </div>
-                </div>
+            <!-- المرحلة الأولى: تصميم الشعار -->
+            <div class="control-group">
+                <label for="text-input">النص</label>
+                <input type="text" id="text-input" class="input-field" value="شعار">
             </div>
-
-            <!-- Canvas Workspace -->
-            <div class="canvas-workspace">
-                <div class="h-full flex items-center justify-center p-8">
-                    <div id="designCanvas" class="bg-white rounded-lg shadow-xl relative" style="width: 800px; height: 600px;">
-                        <!-- Sample design elements -->
-                        <div class="design-element active" style="top: 200px; left: 400px; transform: translate(-50%, -50%);">
-                            <div class="element-handles">
-                                <div class="handle-btn"><i class="fas fa-arrows-alt"></i></div>
-                                <div class="handle-btn"><i class="fas fa-trash"></i></div>
-                                <div class="handle-btn"><i class="fas fa-copy"></i></div>
-                            </div>
-                            <div class="text-4xl font-bold text-primary text-3d font-cairo">شعارك هنا</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="control-group">
+                <label for="font-select">الخط</label>
+                <select id="font-select" class="select-field">
+                    <option value="tajawal">Tajawal</option>
+                    <!-- يمكن إضافة خطوط أخرى هنا -->
+                </select>
             </div>
-
-            <!-- Control Panel -->
-            <div class="control-panel bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto p-6">
-                <div id="textControls" class="panel-content">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                        <i class="fas fa-font text-primary"></i>
-                        تحرير النص
-                    </h3>
-
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">محتوى النص</label>
-                            <input type="text" id="elementText" value="شعارك هنا" 
-                                   class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">نوع الخط</label>
-                            <select id="elementFont" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-                                <option value="Cairo">Cairo</option>
-                                <option value="Amiri">Amiri</option>
-                                <option value="Tajawal">Tajawal</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">حجم الخط</label>
-                            <input type="range" id="elementSize" min="12" max="120" value="36" 
-                                   class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">التأثير</label>
-                            <select id="elementEffect" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-                                <option value="3d">ثلاثي الأبعاد</option>
-                                <option value="neon">نيون</option>
-                                <option value="gold">ذهبي</option>
-                                <option value="glow">توهج</option>
-                                <option value="gradient">تدرج</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">الألوان</label>
-                            <div class="grid grid-cols-4 gap-2">
-                                <div class="w-full h-8 bg-blue-500 rounded cursor-pointer color-option" data-color="#3b82f6"></div>
-                                <div class="w-full h-8 bg-red-500 rounded cursor-pointer color-option" data-color="#ef4444"></div>
-                                <div class="w-full h-8 bg-green-500 rounded cursor-pointer color-option" data-color="#10b981"></div>
-                                <div class="w-full h-8 bg-purple-500 rounded cursor-pointer color-option" data-color="#8b5cf6"></div>
-                                <div class="w-full h-8 bg-yellow-500 rounded cursor-pointer color-option" data-color="#f59e0b"></div>
-                                <div class="w-full h-8 bg-pink-500 rounded cursor-pointer color-option" data-color="#ec4899"></div>
-                                <div class="w-full h-8 bg-indigo-500 rounded cursor-pointer color-option" data-color="#6366f1"></div>
-                                <div class="w-full h-8 bg-gray-800 rounded cursor-pointer color-option" data-color="#1f2937"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="control-group">
+                <label for="depth-slider">عمق/سماكة النص: <span id="depth-value">15</span></label>
+                <input type="range" id="depth-slider" min="1" max="50" value="15" class="slider">
             </div>
-
-            <!-- Bottom Toolbar -->
-            <div class="col-span-3 bg-white dark:bg-gray-800 flex items-center justify-between px-6 border-t border-gray-200 dark:border-gray-700">
-                <div class="flex items-center gap-4">
-                    <button class="tool-btn bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 px-4 py-2 rounded-lg text-sm transition-colors">
-                        <i class="fas fa-undo ml-1"></i>
-                        تراجع
-                    </button>
-                    <button class="tool-btn bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 px-4 py-2 rounded-lg text-sm transition-colors">
-                        <i class="fas fa-redo ml-1"></i>
-                        إعادة
-                    </button>
-                </div>
-
-                <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                    <span>100%</span>
-                    <button class="p-1"><i class="fas fa-search-minus"></i></button>
-                    <button class="p-1"><i class="fas fa-search-plus"></i></button>
-                </div>
+            <div class="control-group">
+                <label for="color-picker">لون المادة</label>
+                <input type="color" id="color-picker" value="#007bff">
             </div>
-        </div>
-    </div>
-
-    <!-- Templates Modal -->
-    <div id="templatesModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white dark:bg-gray-800 rounded-2xl w-11/12 max-w-6xl max-h-5/6 overflow-auto">
-            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">التصاميم الجاهزة</h2>
-                <button id="closeTemplatesModal" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
-                    <i class="fas fa-times text-xl"></i>
-                </button>
+            <div class="control-group">
+                <label for="material-select">نوع المادة</label>
+                <select id="material-select" class="select-field">
+                    <option value="glossy">لامع (Glossy)</option>
+                    <option value="matte">مطفي (Matte)</option>
+                    <option value="metal">معدني (Metallic)</option>
+                </select>
             </div>
             
-            <div class="p-6">
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    <div class="template-card bg-gray-50 dark:bg-gray-700 rounded-xl p-4 cursor-pointer hover:shadow-lg transition-all duration-200">
-                        <div class="h-32 bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg mb-3 flex items-center justify-center">
-                            <i class="fas fa-crown text-white text-3xl"></i>
-                        </div>
-                        <h3 class="font-semibold text-gray-900 dark:text-white text-center">التصميم الفاخر</h3>
+            <!-- المرحلة الثانية: دمج التصميم -->
+            <div class="mockups-section">
+                <h3>اختر قالب لعرض شعارك</h3>
+                <div class="mockup-gallery">
+                    <div class="mockup-item" data-mockup="wall" data-logo-pos='{"x": 512, "y": 280, "scale": 0.8, "rotation": 0}'>
+                        <img src="https://assets.codepen.io/33787/mockup-wall.jpg" alt="شعار على جدار">
                     </div>
-                    
-                    <div class="template-card bg-gray-50 dark:bg-gray-700 rounded-xl p-4 cursor-pointer hover:shadow-lg transition-all duration-200">
-                        <div class="h-32 bg-gradient-to-br from-green-400 to-blue-600 rounded-lg mb-3 flex items-center justify-center">
-                            <i class="fas fa-lightbulb text-white text-3xl"></i>
-                        </div>
-                        <h3 class="font-semibold text-gray-900 dark:text-white text-center">التصميم الإبداعي</h3>
+                    <div class="mockup-item" data-mockup="card" data-logo-pos='{"x": 250, "y": 400, "scale": 0.35, "rotation": -0.1}'>
+                        <img src="https://assets.codepen.io/33787/mockup-card.jpg" alt="شعار على بطاقة عمل">
                     </div>
-                    
-                    <div class="template-card bg-gray-50 dark:bg-gray-700 rounded-xl p-4 cursor-pointer hover:shadow-lg transition-all duration-200">
-                        <div class="h-32 bg-gradient-to-br from-red-400 to-pink-600 rounded-lg mb-3 flex items-center justify-center">
-                            <i class="fas fa-rocket text-white text-3xl"></i>
-                        </div>
-                        <h3 class="font-semibold text-gray-900 dark:text-white text-center">التصميم التقني</h3>
-                    </div>
-                    
-                    <div class="template-card bg-gray-50 dark:bg-gray-700 rounded-xl p-4 cursor-pointer hover:shadow-lg transition-all duration-200">
-                        <div class="h-32 bg-gradient-to-br from-yellow-400 to-orange-600 rounded-lg mb-3 flex items-center justify-center">
-                            <i class="fas fa-leaf text-white text-3xl"></i>
-                        </div>
-                        <h3 class="font-semibold text-gray-900 dark:text-white text-center">التصميم الطبيعي</h3>
+                     <div class="mockup-item" data-mockup="bag" data-logo-pos='{"x": 512, "y": 450, "scale": 0.5, "rotation": 0}'>
+                        <img src="https://assets.codepen.io/33787/mockup-bag.jpg" alt="شعار على كيس ورقي">
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+    <!-- النافذة النهائية لعرض النتيجة -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <canvas id="result-canvas"></canvas>
+            <button id="close-modal" class="close-modal">&times;</button>
+        </div>
+    </div>
 
+    <!-- تحميل المكتبات -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // Dark mode detection
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark');
-        }
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-            if (event.matches) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        });
+        // انتظر حتى يتم تحميل الصفحة بالكامل
+        document.addEventListener('DOMContentLoaded', () => {
 
-        // Elements
-        const logoSection = document.getElementById('logoSection');
-        const designerSection = document.getElementById('designerSection');
-        const logoName = document.getElementById('logoName');
-        const fontFamily = document.getElementById('fontFamily');
-        const textStyle = document.getElementById('textStyle');
-        const textShape = document.getElementById('textShape');
-        const bgColor = document.getElementById('bgColor');
-        const logoDescription = document.getElementById('logoDescription');
-        const previewText = document.getElementById('previewText');
-        const logoPreview = document.getElementById('logoPreview');
-        const generateLogoBtn = document.getElementById('generateLogoBtn');
-        const generateBtnText = document.getElementById('generateBtnText');
-        const generateSpinner = document.getElementById('generateSpinner');
-        const openDesignerBtn = document.getElementById('openDesignerBtn');
-        const backToLogoBtn = document.getElementById('backToLogoBtn');
-        const resetLogoBtn = document.getElementById('resetLogoBtn');
-        const templatesBtn = document.getElementById('templatesBtn');
-        const templatesModal = document.getElementById('templatesModal');
-        const closeTemplatesModal = document.getElementById('closeTemplatesModal');
-        const aiLogoResult = document.getElementById('aiLogoResult');
-        const aiLogoContainer = document.getElementById('aiLogoContainer');
+            // --- إعدادات Three.js الأساسية ---
+            const canvas = document.getElementById('logo-canvas');
+            const stage = document.querySelector('.stage');
+            const loaderElement = document.getElementById('loader');
 
-        // Register AI handler for logo generation
-        window.Poe.registerHandler("logo-handler", (result, context) => {
-            const msg = result.responses[0];
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, stage.clientWidth / stage.clientHeight, 0.1, 1000);
+            camera.position.z = 100;
+
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+            renderer.setSize(stage.clientWidth, stage.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            // الإضاءة
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            const pointLight = new THREE.PointLight(0xffffff, 0.8);
+            pointLight.position.set(50, 50, 100);
+            scene.add(pointLight);
+
+            let textMesh = null;
+            let font = null;
             
-            if (msg.status === "error") {
-                setGenerateButton(false);
-                showNotification("حدث خطأ في إنشاء الشعار: " + (msg.statusText || "خطأ غير معروف"), "error");
-            } else if (msg.status === "incomplete") {
-                // Show loading message
-                aiLogoContainer.innerHTML = '<div class="text-gray-500 text-center">جاري إنشاء الشعار...</div>';
-            } else if (msg.status === "complete") {
-                if (msg.attachments && msg.attachments.length > 0) {
-                    const imageAttachment = msg.attachments[0];
-                    aiLogoContainer.innerHTML = `<img src="${imageAttachment.url}" alt="AI Generated Logo" class="max-w-full max-h-full object-contain rounded-lg">`;
-                    aiLogoResult.classList.remove('hidden');
-                    showNotification("تم إنشاء الشعار بنجاح!", "success");
-                } else {
-                    aiLogoContainer.innerHTML = '<div class="text-gray-500 text-center">لم يتم إنشاء صورة</div>';
-                    showNotification("لم يتم إنشاء شعار صالح", "warning");
+            // --- تحميل الخط ---
+            // ملاحظة: قمت بتحويل خط Tajawal Bold إلى صيغة JSON التي تفهمها Three.js
+            const fontLoader = new THREE.FontLoader();
+            fontLoader.load('https://assets.codepen.io/33787/tajawal_bold.json', (loadedFont) => {
+                font = loadedFont;
+                loaderElement.style.display = 'none';
+                createText();
+            }, undefined, (err) => {
+                console.error(err);
+                loaderElement.innerText = "فشل تحميل الخط";
+            });
+
+            // --- عناصر التحكم ---
+            const textInput = document.getElementById('text-input');
+            const depthSlider = document.getElementById('depth-slider');
+            const depthValue = document.getElementById('depth-value');
+            const colorPicker = document.getElementById('color-picker');
+            const materialSelect = document.getElementById('material-select');
+
+            // --- الوظيفة الرئيسية لإنشاء النص ثلاثي الأبعاد ---
+            function createText() {
+                if (!font) return; // لا تفعل شيئاً إذا لم يتم تحميل الخط بعد
+
+                if (textMesh) {
+                    scene.remove(textMesh);
+                    textMesh.geometry.dispose();
+                    textMesh.material.dispose();
                 }
-                setGenerateButton(false);
-            }
-        });
 
-        function setGenerateButton(loading) {
-            generateLogoBtn.disabled = loading;
-            if (loading) {
-                generateBtnText.textContent = 'جاري الإنشاء...';
-                generateSpinner.classList.remove('hidden');
-            } else {
-                generateBtnText.textContent = 'أنشئ الشعار';
-                generateSpinner.classList.add('hidden');
-            }
-        }
-
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `fixed top-4 left-4 right-4 mx-auto max-w-md z-50 p-4 rounded-lg text-white transform transition-all duration-300 translate-y-[-100px] opacity-0 ${
-                type === 'success' ? 'bg-green-500' : 
-                type === 'error' ? 'bg-red-500' : 
-                type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
-            }`;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.classList.remove('translate-y-[-100px]', 'opacity-0');
-            }, 100);
-            
-            setTimeout(() => {
-                notification.classList.add('translate-y-[-100px]', 'opacity-0');
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-        }
-
-        // Update preview text
-        function updatePreview() {
-            const name = logoName.value || 'شعارك هنا';
-            const font = fontFamily.value;
-            const style = textStyle.value;
-            const shape = textShape.value;
-            const bg = bgColor.value;
-            
-            previewText.textContent = name;
-            previewText.className = `text-4xl font-bold font-${font.toLowerCase()} transition-all duration-500`;
-            
-            // Add style classes
-            switch (style) {
-                case '3d':
-                    previewText.classList.add('text-3d', 'text-primary');
-                    break;
-                case 'neon':
-                    previewText.classList.add('text-neon', 'text-cyan-400');
-                    break;
-                case 'gold':
-                    previewText.classList.add('text-gold');
-                    break;
-                case 'glow':
-                    previewText.classList.add('text-glow', 'text-primary');
-                    break;
-                case 'gradient':
-                    previewText.classList.add('text-gradient');
-                    break;
-            }
-            
-            // Add shape classes
-            switch (shape) {
-                case 'arc':
-                    previewText.classList.add('shape-arc');
-                    break;
-                case 'wave':
-                    previewText.classList.add('shape-wave');
-                    break;
-                case 'circle':
-                    previewText.classList.add('shape-circle');
-                    break;
-            }
-            
-            logoPreview.style.backgroundColor = bg;
-        }
-
-        // Generate AI logo
-        async function generateAILogo() {
-            const name = logoName.value.trim();
-            const description = logoDescription.value.trim();
-            
-            if (!name) {
-                showNotification('يرجى إدخال اسم الشعار', 'warning');
-                return;
-            }
-            
-            setGenerateButton(true);
-            aiLogoResult.classList.add('hidden');
-            
-            let prompt = `Create a professional logo for "${name}"`;
-            if (description) {
-                prompt += `. ${description}`;
-            }
-            prompt += '. Make it modern, clean, and suitable for business use. --aspect 1:1';
-            
-            try {
-                await window.Poe.sendUserMessage(`@GPT-Image-1 ${prompt}`, {
-                    handler: "logo-handler",
-                    stream: false,
-                    openChat: false
+                const text = textInput.value.split('').reverse().join(''); // عكس النص للعربية
+                const geometry = new THREE.TextGeometry(text, {
+                    font: font,
+                    size: 40,
+                    height: parseInt(depthSlider.value),
+                    curveSegments: 12,
+                    bevelEnabled: true,
+                    bevelThickness: 1,
+                    bevelSize: 1,
+                    bevelOffset: 0,
+                    bevelSegments: 5
                 });
-            } catch (err) {
-                setGenerateButton(false);
-                showNotification("خطأ في بدء إنشاء الشعار: " + err.message, "error");
-            }
-        }
-
-        // Navigation functions
-        function openDesigner() {
-            logoSection.classList.add('hidden');
-            designerSection.classList.remove('hidden');
-        }
-
-        function backToLogo() {
-            designerSection.classList.add('hidden');
-            logoSection.classList.remove('hidden');
-        }
-
-        function resetLogo() {
-            logoName.value = '';
-            logoDescription.value = '';
-            fontFamily.value = 'Cairo';
-            textStyle.value = '3d';
-            textShape.value = 'straight';
-            bgColor.value = '#ffffff';
-            aiLogoResult.classList.add('hidden');
-            updatePreview();
-        }
-
-        function openTemplates() {
-            templatesModal.classList.remove('hidden');
-        }
-
-        function closeTemplates() {
-            templatesModal.classList.add('hidden');
-        }
-
-        // Designer functions
-        let activeElement = null;
-        let isDragging = false;
-        let dragOffset = { x: 0, y: 0 };
-
-        function setupDesignerInteractions() {
-            const designElements = document.querySelectorAll('.design-element');
-            
-            designElements.forEach(element => {
-                element.addEventListener('mousedown', (e) => {
-                    e.preventDefault();
-                    setActiveElement(element);
-                    isDragging = true;
-                    
-                    const rect = element.getBoundingClientRect();
-                    dragOffset.x = e.clientX - rect.left;
-                    dragOffset.y = e.clientY - rect.top;
-                });
-            });
-            
-            document.addEventListener('mousemove', (e) => {
-                if (isDragging && activeElement) {
-                    const canvas = document.getElementById('designCanvas');
-                    const canvasRect = canvas.getBoundingClientRect();
-                    
-                    let x = e.clientX - canvasRect.left - dragOffset.x;
-                    let y = e.clientY - canvasRect.top - dragOffset.y;
-                    
-                    // Constrain to canvas bounds
-                    x = Math.max(0, Math.min(x, canvasRect.width - activeElement.offsetWidth));
-                    y = Math.max(0, Math.min(y, canvasRect.height - activeElement.offsetHeight));
-                    
-                    activeElement.style.left = x + 'px';
-                    activeElement.style.top = y + 'px';
-                }
-            });
-            
-            document.addEventListener('mouseup', () => {
-                isDragging = false;
-            });
-        }
-
-        function setActiveElement(element) {
-            // Remove active class from all elements
-            document.querySelectorAll('.design-element').forEach(el => {
-                el.classList.remove('active');
-            });
-            
-            // Add active class to selected element
-            element.classList.add('active');
-            activeElement = element;
-            
-            // Update control panel based on element type
-            if (element.querySelector('.text-4xl')) {
-                updateTextControls(element);
-            }
-        }
-
-        function updateTextControls(element) {
-            const textElement = element.querySelector('.text-4xl');
-            if (textElement) {
-                document.getElementById('elementText').value = textElement.textContent;
-                // Update other controls based on element properties
-            }
-        }
-
-        // Event listeners
-        logoName.addEventListener('input', updatePreview);
-        fontFamily.addEventListener('change', updatePreview);
-        textStyle.addEventListener('change', updatePreview);
-        textShape.addEventListener('change', updatePreview);
-        bgColor.addEventListener('change', updatePreview);
-        generateLogoBtn.addEventListener('click', generateAILogo);
-        openDesignerBtn.addEventListener('click', openDesigner);
-        backToLogoBtn.addEventListener('click', backToLogo);
-        resetLogoBtn.addEventListener('click', resetLogo);
-        templatesBtn.addEventListener('click', openTemplates);
-        closeTemplatesModal.addEventListener('click', closeTemplates);
-
-        // Designer event listeners
-        document.getElementById('elementText').addEventListener('input', (e) => {
-            if (activeElement) {
-                const textElement = activeElement.querySelector('.text-4xl');
-                if (textElement) {
-                    textElement.textContent = e.target.value;
-                }
-            }
-        });
-
-        document.getElementById('elementFont').addEventListener('change', (e) => {
-            if (activeElement) {
-                const textElement = activeElement.querySelector('.text-4xl');
-                if (textElement) {
-                    textElement.className = textElement.className.replace(/font-\w+/g, '');
-                    textElement.classList.add(`font-${e.target.value.toLowerCase()}`);
-                }
-            }
-        });
-
-        document.getElementById('elementSize').addEventListener('input', (e) => {
-            if (activeElement) {
-                const textElement = activeElement.querySelector('.text-4xl');
-                if (textElement) {
-                    textElement.style.fontSize = e.target.value + 'px';
-                }
-            }
-        });
-
-        document.getElementById('elementEffect').addEventListener('change', (e) => {
-            if (activeElement) {
-                const textElement = activeElement.querySelector('.text-4xl');
-                if (textElement) {
-                    // Remove existing effect classes
-                    textElement.classList.remove('text-3d', 'text-neon', 'text-gold', 'text-glow', 'text-gradient');
-                    textElement.classList.add(`text-${e.target.value}`);
-                }
-            }
-        });
-
-        // Color options
-        document.querySelectorAll('.color-option').forEach(option => {
-            option.addEventListener('click', (e) => {
-                if (activeElement) {
-                    const textElement = activeElement.querySelector('.text-4xl');
-                    if (textElement) {
-                        textElement.style.color = e.target.dataset.color;
-                    }
-                }
-            });
-        });
-
-        // Sidebar tools
-        document.querySelectorAll('.sidebar-tool').forEach(tool => {
-            tool.addEventListener('click', (e) => {
-                document.querySelectorAll('.sidebar-tool').forEach(t => t.classList.remove('active'));
-                tool.classList.add('active');
                 
-                const toolType = tool.dataset.tool;
-                // Handle different tools
-                switch (toolType) {
-                    case 'text':
-                        // Add text functionality
-                        break;
-                    case 'shapes':
-                        // Add shapes functionality
-                        break;
-                    case 'ai':
-                        // Add AI functionality
-                        break;
-                }
-            });
-        });
+                geometry.center(); // لتوسيط الشعار
 
-        // Close modal when clicking outside
-        templatesModal.addEventListener('click', (e) => {
-            if (e.target === templatesModal) {
-                closeTemplates();
-            }
-        });
+                const materialType = materialSelect.value;
+                let material;
 
-        // Initialize
-        updatePreview();
-        setupDesignerInteractions();
-
-        // Template selection
-        document.querySelectorAll('.template-card').forEach(card => {
-            card.addEventListener('click', () => {
-                showNotification('تم تطبيق القالب!', 'success');
-                closeTemplates();
-                // Apply template logic here
-            });
-        });
-    </script>
-</body>
-</html>
+                if(materialType === 'glossy') {
+                    material = new THREE.MeshStandardMaterial({
+                        color: new THREE.Color(colorPicker.value),
+                        roughness: 0.2,
+                        metalness: 0.1
+                    });
+                } else if(materialType === 'matte') {
+  
