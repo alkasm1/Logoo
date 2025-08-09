@@ -3,368 +3,907 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LogoCraft 3D - صانع الشعارات ثلاثية الأبعاد</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <title>3D Logo Designer Pro - مصمم الشعارات ثلاثية الأبعاد</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #121212;
-            --bg-light: #1E1E1E;
-            --primary: #007bff;
-            --primary-light: #54a3ff;
-            --text-light: #f8f9fa;
-            --text-muted: #adb5bd;
-            --border-color: rgba(255, 255, 255, 0.1);
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Tajawal', sans-serif;
-            margin: 0;
-            background-color: var(--bg-dark);
-            color: var(--text-light);
+            font-family: 'Cairo', sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
             overflow-x: hidden;
-        }
-
-        .main-container {
-            display: flex;
-            height: 100vh;
-            width: 100%;
-        }
-
-        /* لوحة التحكم */
-        .controls-panel {
-            width: 350px;
-            background-color: var(--bg-light);
-            padding: 25px;
-            overflow-y: auto;
-            border-left: 1px solid var(--border-color);
-            transition: width 0.3s ease;
-        }
-
-        .panel-header {
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 20px;
-        }
-
-        .panel-header h1 {
-            font-size: 28px;
-            color: var(--primary);
-            margin: 0;
-        }
-        
-        .panel-header p {
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        .control-group {
-            margin-bottom: 25px;
-        }
-
-        .control-group label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 500;
-            color: var(--text-muted);
-        }
-
-        .input-field, .select-field {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-light);
-            font-size: 16px;
-        }
-
-        .input-field:focus, .select-field:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
-        }
-
-        /* المسرح الرئيسي للشعار */
-        .stage {
-            flex-grow: 1;
             position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: radial-gradient(circle, #2a2a2a 0%, var(--bg-dark) 100%);
         }
 
-        #logo-canvas {
+        /* خلفية متحركة */
+        .background-animation {
+            position: fixed;
             width: 100%;
             height: 100%;
-            display: block;
-        }
-        
-        .loader {
-            position: absolute;
-            color: var(--primary);
-            font-size: 18px;
-            z-index: 10;
-        }
-
-        /* المرحلة الثانية: قوالب التصميم */
-        .mockups-section {
-            padding: 20px;
-            border-top: 1px solid var(--border-color);
-        }
-        
-        .mockups-section h3 {
-            margin-top: 0;
-            text-align: center;
-            color: var(--text-light);
-        }
-
-        .mockup-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 15px;
-        }
-
-        .mockup-item {
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            cursor: pointer;
+            top: 0;
+            left: 0;
+            z-index: -1;
             overflow: hidden;
-            transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
-        .mockup-item:hover {
-            transform: scale(1.05);
-            border-color: var(--primary);
+        .gradient-sphere {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            animation: float 20s infinite;
         }
 
-        .mockup-item img {
-            width: 100%;
-            height: auto;
+        .sphere-1 {
+            width: 600px;
+            height: 600px;
+            background: var(--gradient-1);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .sphere-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--gradient-2);
+            bottom: -150px;
+            right: -150px;
+            animation-delay: 5s;
+        }
+
+        .sphere-3 {
+            width: 300px;
+            height: 300px;
+            background: var(--gradient-3);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+        }
+
+        /* الشريط العلوي */
+        .navbar {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text p {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        /* المحتوى الرئيسي */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* قسم إدخال النص */
+        .input-section {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        .section-title h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
             display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--light);
         }
-        
-        /* نافذة عرض القالب النهائي */
-        .modal-overlay {
+
+        .text-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: rgba(15, 23, 42, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--light);
+            font-size: 1.125rem;
+            transition: all 0.3s ease;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        /* خيارات التصميم */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .option-card {
+            background: rgba(30, 41, 59, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .option-card:hover {
+            background: rgba(30, 41, 59, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .option-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .option-title i {
+            color: var(--primary);
+        }
+
+        /* معاينة الشعار */
+        .preview-section {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .canvas-container {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        /* الشعار ثلاثي الأبعاد */
+        .logo-3d {
+            font-size: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transform-style: preserve-3d;
+            animation: rotate3d 10s infinite linear;
+            text-shadow: 
+                0 0 20px rgba(99, 102, 241, 0.5),
+                0 0 40px rgba(99, 102, 241, 0.3),
+                0 0 60px rgba(99, 102, 241, 0.1);
+            position: relative;
+        }
+
+        @keyframes rotate3d {
+            0% {
+                transform: rotateY(0deg) rotateX(0deg);
+            }
+            50% {
+                transform: rotateY(180deg) rotateX(10deg);
+            }
+            100% {
+                transform: rotateY(360deg) rotateX(0deg);
+            }
+        }
+
+        /* تأثيرات ثلاثية الأبعاد */
+        .logo-3d::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: rgba(236, 72, 153, 0.5);
+            transform: translateZ(-10px);
+            filter: blur(2px);
+        }
+
+        .logo-3d::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: rgba(6, 182, 212, 0.5);
+            transform: translateZ(-20px);
+            filter: blur(4px);
+        }
+
+        /* أنماط الشعارات */
+        .style-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .style-btn {
+            padding: 0.75rem 1.5rem;
+            background: rgba(99, 102, 241, 0.2);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            color: var(--light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .style-btn:hover {
+            background: rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .style-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        /* لوحة الألوان */
+        .color-palette {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .color-option::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: inherit;
+            filter: brightness(1.2);
+            transform: scale(0);
+            transition: transform 0.3s ease;
+            border-radius: 50%;
+        }
+
+        .color-option:hover::before {
+            transform: scale(1);
+        }
+
+        .color-option.active {
+            border-color: white;
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* أزرار التحكم */
+        .controls-section {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .control-btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* قوالب التصميم */
+        .templates-section {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .template-card {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            aspect-ratio: 1;
+        }
+
+        .template-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .template-preview {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-1);
+            position: relative;
+        }
+
+        .template-icon {
+            font-size: 48px;
+            color: white;
+            opacity: 0.8;
+        }
+
+        .template-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 0.75rem;
+            color: white;
+            font-weight: 500;
+            text-align: center;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .template-card:hover .template-name {
+            transform: translateY(0);
+        }
+
+        /* شريط التقدم */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        /* رسائل التنبيه */
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: slideInRight 0.5s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+        }
+
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
+        /* نافذة منبثقة */
+        .modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            display: flex;
-            justify-content: center;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: none;
             align-items: center;
-            z-index: 100;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            justify-content: center;
+            z-index: 1000;
         }
-        
-        .modal-overlay.visible {
-            opacity: 1;
-            visibility: visible;
+
+        .modal.active {
+            display: flex;
         }
 
         .modal-content {
-            position: relative;
-            max-width: 80%;
-            max-height: 80%;
+            background: var(--dark-light);
+            border-radius: 24px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
         }
 
-        #result-canvas {
-            max-width: 100%;
-            max-height: 100%;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
-        .close-modal {
-            position: absolute;
-            top: -15px;
-            right: -15px;
-            width: 35px;
-            height: 35px;
-            background-color: var(--primary);
-            color: white;
-            border-radius: 50%;
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
             border: none;
-            font-size: 20px;
+            border-radius: 50%;
+            color: white;
             cursor: pointer;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
         }
 
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        /* تحسينات الموبايل */
         @media (max-width: 768px) {
             .main-container {
+                padding: 1rem;
+            }
+
+            .input-section,
+            .preview-section,
+            .templates-section {
+                padding: 1.5rem;
+            }
+
+            .logo-3d {
+                font-size: 2.5rem;
+            }
+
+            .templates-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .style-selector {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+            }
+
+            .controls-section {
                 flex-direction: column;
             }
-            .controls-panel {
+
+            .control-btn {
                 width: 100%;
-                height: 50vh;
-                border-left: none;
+                justify-content: center;
             }
-            .stage {
-                height: 50vh;
+        }
+
+        /* تحميل */
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
             }
+        }
+
+        /* تأثيرات إضافية */
+        .glow {
+            box-shadow: 
+                0 0 20px rgba(99, 102, 241, 0.5),
+                0 0 40px rgba(99, 102, 241, 0.3),
+                0 0 60px rgba(99, 102, 241, 0.1);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientMove 5s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* إعدادات متقدمة */
+        .advanced-settings {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .slider-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            border: none;
         }
     </style>
 </head>
 <body>
+    <!-- خلفية متحركة -->
+    <div class="background-animation">
+        <div class="gradient-sphere sphere-1"></div>
+        <div class="gradient-sphere sphere-2"></div>
+        <div class="gradient-sphere sphere-3"></div>
+    </div>
 
-    <div class="main-container">
-        <!-- المسرح الرئيسي لعرض الشعار ثلاثي الأبعاد -->
-        <div class="stage">
-            <div id="loader" class="loader">جارٍ تحميل الموارد...</div>
-            <canvas id="logo-canvas"></canvas>
-        </div>
-
-        <!-- لوحة التحكم -->
-        <div class="controls-panel">
-            <div class="panel-header">
-                <h1>LogoCraft 3D</h1>
-                <p>صمم شعارك ثلاثي الأبعاد</p>
-            </div>
-
-            <!-- المرحلة الأولى: تصميم الشعار -->
-            <div class="control-group">
-                <label for="text-input">النص</label>
-                <input type="text" id="text-input" class="input-field" value="شعار">
-            </div>
-            <div class="control-group">
-                <label for="font-select">الخط</label>
-                <select id="font-select" class="select-field">
-                    <option value="tajawal">Tajawal</option>
-                    <!-- يمكن إضافة خطوط أخرى هنا -->
-                </select>
-            </div>
-            <div class="control-group">
-                <label for="depth-slider">عمق/سماكة النص: <span id="depth-value">15</span></label>
-                <input type="range" id="depth-slider" min="1" max="50" value="15" class="slider">
-            </div>
-            <div class="control-group">
-                <label for="color-picker">لون المادة</label>
-                <input type="color" id="color-picker" value="#007bff">
-            </div>
-            <div class="control-group">
-                <label for="material-select">نوع المادة</label>
-                <select id="material-select" class="select-field">
-                    <option value="glossy">لامع (Glossy)</option>
-                    <option value="matte">مطفي (Matte)</option>
-                    <option value="metal">معدني (Metallic)</option>
-                </select>
-            </div>
-            
-            <!-- المرحلة الثانية: دمج التصميم -->
-            <div class="mockups-section">
-                <h3>اختر قالب لعرض شعارك</h3>
-                <div class="mockup-gallery">
-                    <div class="mockup-item" data-mockup="wall" data-logo-pos='{"x": 512, "y": 280, "scale": 0.8, "rotation": 0}'>
-                        <img src="https://assets.codepen.io/33787/mockup-wall.jpg" alt="شعار على جدار">
-                    </div>
-                    <div class="mockup-item" data-mockup="card" data-logo-pos='{"x": 250, "y": 400, "scale": 0.35, "rotation": -0.1}'>
-                        <img src="https://assets.codepen.io/33787/mockup-card.jpg" alt="شعار على بطاقة عمل">
-                    </div>
-                     <div class="mockup-item" data-mockup="bag" data-logo-pos='{"x": 512, "y": 450, "scale": 0.5, "rotation": 0}'>
-                        <img src="https://assets.codepen.io/33787/mockup-bag.jpg" alt="شعار على كيس ورقي">
-                    </div>
+    <!-- شريط التنقل -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>3D Logo Designer Pro</h1>
+                    <p>مصمم الشعارات ثلاثية الأبعاد</p>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <!-- النافذة النهائية لعرض النتيجة -->
-    <div id="modal-overlay" class="modal-overlay">
-        <div class="modal-content">
-            <canvas id="result-canvas"></canvas>
-            <button id="close-modal" class="close-modal">&times;</button>
-        </div>
-    </div>
+    </nav>
 
-    <!-- تحميل المكتبات -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-        // انتظر حتى يتم تحميل الصفحة بالكامل
-        document.addEventListener('DOMContentLoaded', () => {
+    <!-- المحتوى الرئيسي -->
+    <div class="main-container">
+        <!-- قسم إدخال النص -->
+        <section class="input-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-pencil-alt"></i>
+                </div>
+                <div class="section-title">
+                    <h2>إنشاء شعارك</h2>
+                    <p>أدخل النص الذي تريد تحويله إلى شعار ثلاثي الأبعاد</p>
+                </div>
+            </div>
 
-            // --- إعدادات Three.js الأساسية ---
-            const canvas = document.getElementById('logo-canvas');
-            const stage = document.querySelector('.stage');
-            const loaderElement = document.getElementById('loader');
+            <div class="input-group">
+                <label class="input-label">نص الشعار</label>
+                <input type="text" class="text-input" id="logoText" placeholder="اكتب اسمك أو اسم شركتك هنا..." value="LOGO">
+            </div>
 
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, stage.clientWidth / stage.clientHeight, 0.1, 1000);
-            camera.position.z = 100;
+            <div class="options-grid">
+                <div class="option-card">
+                    <div class="option-title">
+                        <i class="fas fa-font"></i>
+                        <span>نوع الخط</span>
+                    </div>
+                    <select class="text-input" id="fontFamily">
+                        <option value="Arial">Arial</option>
+                        <option value="Cairo" selected>Cairo</option>
+                        <option value="Impact">Impact</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Courier New">Courier New</option>
+                    </select>
+                </div>
 
-            const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-            renderer.setSize(stage.clientWidth, stage.clientHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
+                <div class="option-card">
+                    <div class="option-title">
+                        <i class="fas fa-text-height"></i>
+                        <span>حجم الخط</span>
+                    </div>
+                    <div class="slider-container">
+                        <div class="slider-label">
+                            <span>الحجم</span>
+                            <span id="fontSizeValue">60</span>
+                        </div>
+                        <input type="range" class="slider" id="fontSize" min="20" max="120" value="60">
+                    </div>
+                </div>
 
-            // الإضاءة
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-            scene.add(ambientLight);
-            const pointLight = new THREE.PointLight(0xffffff, 0.8);
-            pointLight.position.set(50, 50, 100);
-            scene.add(pointLight);
-
-            let textMesh = null;
-            let font = null;
-            
-            // --- تحميل الخط ---
-            // ملاحظة: قمت بتحويل خط Tajawal Bold إلى صيغة JSON التي تفهمها Three.js
-            const fontLoader = new THREE.FontLoader();
-            fontLoader.load('https://assets.codepen.io/33787/tajawal_bold.json', (loadedFont) => {
-                font = loadedFont;
-                loaderElement.style.display = 'none';
-                createText();
-            }, undefined, (err) => {
-                console.error(err);
-                loaderElement.innerText = "فشل تحميل الخط";
-            });
-
-            // --- عناصر التحكم ---
-            const textInput = document.getElementById('text-input');
-            const depthSlider = document.getElementById('depth-slider');
-            const depthValue = document.getElementById('depth-value');
-            const colorPicker = document.getElementById('color-picker');
-            const materialSelect = document.getElementById('material-select');
-
-            // --- الوظيفة الرئيسية لإنشاء النص ثلاثي الأبعاد ---
-            function createText() {
-                if (!font) return; // لا تفعل شيئاً إذا لم يتم تحميل الخط بعد
-
-                if (textMesh) {
-                    scene.remove(textMesh);
-                    textMesh.geometry.dispose();
-                    textMesh.material.dispose();
-                }
-
-                const text = textInput.value.split('').reverse().join(''); // عكس النص للعربية
-                const geometry = new THREE.TextGeometry(text, {
-                    font: font,
-                    size: 40,
-                    height: parseInt(depthSlider.value),
-                    curveSegments: 12,
-                    bevelEnabled: true,
-                    bevelThickness: 1,
-                    bevelSize: 1,
-                    bevelOffset: 0,
-                    bevelSegments: 5
-                });
-                
-                geometry.center(); // لتوسيط الشعار
-
-                const materialType = materialSelect.value;
-                let material;
-
-                if(materialType === 'glossy') {
-                    material = new THREE.MeshStandardMaterial({
-                        color: new THREE.Color(colorPicker.value),
-                        roughness: 0.2,
-                        metalness: 0.1
-                    });
-                } else if(materialType === 'matte') {
-  
+                <div class="option-card">
+                    <div class="option-title">
+                        <i class="fas fa-palette"></i>
+                        <span>لون الشعار</span>
+                    </div>
+                    <div class="color-palette">
+                        <div class="color-option active" style="background: linear-gradient(135deg, #667eea, #764ba2)" data-gradient="linear-gradient(135deg, #667eea, #764ba2)"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #f093fb, #f5576c)" data-gradient="linear-gradient(135deg, #f093fb, #f5576c)"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #4facfe, #00f2fe)" data-gradient="linear-gradient(135deg, #4facfe, #00f2fe)"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #fa709a, #fee140)" data-gradient="linear-gradient(135deg, #fa709a, #fee140)"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #30cfd0, #330867)" data-gradient="linear-gradient(135deg, #30cfd0, #330867)"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #a8edea, #fed6e3)" data-gradient="linear-gradient(135deg, #a8edea, #fed6e3)"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #ff9a9e, #fecfef)"
